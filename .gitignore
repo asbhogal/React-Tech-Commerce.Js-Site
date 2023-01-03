@@ -2,6 +2,10 @@
 
 node_modules
 
+## ENV KEYS ##
+
+.env
+
 ## NOTES ##
 
 notes.txt
