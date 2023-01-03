@@ -1,9 +1,9 @@
-import "../scss/index.scss";
+import Products from './products/Products'
 
 const App = () => {
     return (
         <div>
-
+            <Products />
         </div>
     )
 }
