@@ -7,8 +7,8 @@ const   path = require("path"),
             new CleanWebpackPlugin(),
             new MiniCSSExtractPlugin(),
             new HTMLWebpackPlugin({
-                title: "React Airbnb Experiences - Landing Page",
-                author: "Aman Singh Bhogal & freeCodeCamp",
+                title: "React Technology Commerce Site",
+                author: "Aman Singh Bhogal & JavaScript Mastery",
                 template: "./src/index.html"
             }),
         ];
