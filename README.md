@@ -1,21 +1,23 @@
 <div align="center">
 
-<h1>React SuperM eCommerce Site</h1>
+<h1>React-Tech-Commerce.Js-Site</h1>
 
 </div>
 
-An eCommerce site by a fictional company called 'SuperM' which offers supermarket products. The site allows customers to browse the items, switch between different sets of data and add single or multiple quantities of products to the card. A Stripe gateway is also configured, directing them to the checkout and payment page and, upon a successful transaction, directs the customer back to the home page.
+An eCommerce site by a fictional company which offers a range of home and technology products. The site allows customers to browse the items, switch between different sets of data and add single or multiple quantities of products to the card. A Stripe gateway is also configured, directing them to the checkout and payment page and, upon a successful transaction, returns a confirmation page and sends them an invoice via email.
 
-This project is part of a tutorial by React Tutorial, and is coded using HTML5, CSS3, SCSS, JavaScript (ES6), React and leveraging Babel and Webpack. This repo is currently under development.
-
+This project is coded using HTML5, CSS3, SCSS, JavaScript (ES6), React and leverages Babel and Webpack for production build. This repo is currently under development.
 
 <strong>:heavy_check_mark: Features:</strong><br>
   - eCommerce Site with several dummy products
-  - Allows multiple purchases
-  - Leverages Stripe gateway for transactions
-  - Form validation
+  - Allows multiple purchases of products
+  - Leverages Commerce.js and Stripe gateway for data storage and transactions
+  - Sends an email confirmation to the customer post-purchase
+  - Form validation with dynamic location fields
   - Fully responsive
   - Optimised for the web
+
+Please note that the payment system is configured to sandbox mode (ie. no payments will be taken from an active card. If you wish to use dummy credit card details instead, Stripe have provided some <a target="_blank" href="https://stripe.com/docs/testing#cards">here</a>)
 
 <strong>:nerd_face: Stacks &#38; Tools Used:</strong><br>
 <br>
