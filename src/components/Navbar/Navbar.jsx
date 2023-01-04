@@ -13,6 +13,9 @@ import siteLogo from "../../assets/logos/Soeb-USB-symbol.svg";
 import useStyles from "./styles";
 
 const Navbar = () => {
+
+    const classes = useStyles();
+
     return (
         <div>
             <AppBar position="fixed" className={ classes.appBar } color="inherit">

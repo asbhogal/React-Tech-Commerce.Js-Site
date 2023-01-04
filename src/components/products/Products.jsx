@@ -4,6 +4,7 @@ import Product from "./Product/Product";
 import chargingCable from "../../assets/images/charging-cable-cropped.png";
 import deskLamp from "../../assets/images/desk-lamp.jpg";
 import appleMacbook from "../../assets/images/apple-macbook.jpg";
+import useStyles from "./styles";
 
 const productList = [
     {
@@ -30,8 +31,12 @@ const productList = [
 ];
 
 const Products = () => {
+
+    const classes = useStyles();
+
     return (
-        <main>
+        <main className={ classes.content }>
+            <div className={ classes.toolbar }/>
             <Grid container justifyContent="center" spacing={ 4 }>
                 { productList.map((product) => (
                     <Grid item key={ product.id } xs={ 12 } sm={ 6 } md={ 4 } lg={ 3 }>
