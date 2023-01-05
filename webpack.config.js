@@ -1,9 +1,16 @@
+const webpack = require("webpack");
+
 const   path = require("path"),
         MiniCSSExtractPlugin = require("mini-css-extract-plugin"),
         HTMLWebpackPlugin = require("html-webpack-plugin"),
         { CleanWebpackPlugin } = require("clean-webpack-plugin"),
         ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin"),
+        //ProvidePlugin = require("process"),
         plugins = [
+            new webpack.ProvidePlugin({
+                process: 'process/browser',
+         }),
+           // new ProvidePlugin(),
             new CleanWebpackPlugin(),
             new MiniCSSExtractPlugin(),
             new HTMLWebpackPlugin({
