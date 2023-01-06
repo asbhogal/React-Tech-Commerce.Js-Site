@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 
 const   path = require("path"),
+        Dotenv = require("dotenv-webpack"),
         MiniCSSExtractPlugin = require("mini-css-extract-plugin"),
         HTMLWebpackPlugin = require("html-webpack-plugin"),
         { CleanWebpackPlugin } = require("clean-webpack-plugin"),
@@ -10,6 +11,7 @@ const   path = require("path"),
             new webpack.ProvidePlugin({
                 process: 'process/browser',
          }),
+            new Dotenv(),
            // new ProvidePlugin(),
             new CleanWebpackPlugin(),
             new MiniCSSExtractPlugin(),
