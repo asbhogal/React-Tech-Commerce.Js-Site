@@ -12,7 +12,7 @@ import { ShoppingCart } from "@material-ui/icons";
 import siteLogo from "../../assets/logos/Soeb-USB-symbol.svg";
 import useStyles from "./styles";
 
-const Navbar = () => {
+const Navbar = ({ totalItems }) => {
 
     const classes = useStyles();
 
@@ -27,7 +27,7 @@ const Navbar = () => {
                     <div className={ classes.grow } />
                     <div className={ classes.button }>
                         <IconButton aria-label="Show cart items" color="inherit">
-                            <Badge badgeContent={ 3 } color="secondary">
+                            <Badge badgeContent={ totalItems } color="secondary">
                                 <ShoppingCart />
                             </Badge>
                         </IconButton>

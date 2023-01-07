@@ -9,18 +9,18 @@ import {
     } from "@material-ui/core";
 import { AddShoppingCart } from "@material-ui/icons";
 import useStyles from "./styles";
-
 import DOMPurify from "dompurify";
 
-const Product = ( {product} ) => {
+const Product = ( { product, onAddToCart } ) => {
 
     const classes = useStyles();
+    
     const data = ( product.description );
     const sanitizedData = () => ({
         __html: DOMPurify.sanitize(data)
     });
 
-    console.log(product);
+    //console.log(product);
 
     return (
         <Card className={ classes.root }>
@@ -37,7 +37,7 @@ const Product = ( {product} ) => {
                 <Typography dangerouslySetInnerHTML={ sanitizedData() } variant="body2" color="textSecondary"/>
             </CardContent>
             <CardActions disableSpacing className={ classes.cardActions }>
-                <IconButton aria-label="Add To Cart">
+                <IconButton aria-label="Add To Cart" onClick={ () => onAddToCart(product.id, 1) }>
                     <AddShoppingCart />
                 </IconButton>
             </CardActions>

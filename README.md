@@ -14,6 +14,7 @@ This project is coded using HTML5, CSS3, SCSS, JavaScript (ES6), React and lever
   - Leverages Commerce.js and Stripe gateway for data storage and transactions
   - Sends an email confirmation to the customer post-purchase
   - Form validation with dynamic location fields
+  - DOMPurify to sanitize HTML codes from Commerce.js
   - Fully responsive
   - Optimised for the web
 
