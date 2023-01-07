@@ -15,6 +15,7 @@ This project is coded using HTML5, CSS3, SCSS, JavaScript (ES6), React and lever
   - Sends an email confirmation to the customer post-purchase
   - Form validation with dynamic location fields
   - DOMPurify to sanitize HTML codes from Commerce.js
+  - Material UI used to render stylized React components
   - Fully responsive
   - Optimised for the web
 
