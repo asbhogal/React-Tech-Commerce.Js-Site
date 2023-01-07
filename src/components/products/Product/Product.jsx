@@ -10,9 +10,15 @@ import {
 import { AddShoppingCart } from "@material-ui/icons";
 import useStyles from "./styles";
 
+import DOMPurify from "dompurify";
+
 const Product = ( {product} ) => {
 
     const classes = useStyles();
+    const data = ( product.description );
+    const sanitizedData = () => ({
+        __html: DOMPurify.sanitize(data)
+    });
 
     console.log(product);
 
@@ -28,9 +34,7 @@ const Product = ( {product} ) => {
                         { product.price.formatted_with_symbol }
                     </Typography>
                 </div>
-                <Typography variant="body2" color="textSecondary">
-                    { product.description }
-                </Typography>
+                <Typography dangerouslySetInnerHTML={ sanitizedData() } variant="body2" color="textSecondary"/>
             </CardContent>
             <CardActions disableSpacing className={ classes.cardActions }>
                 <IconButton aria-label="Add To Cart">
