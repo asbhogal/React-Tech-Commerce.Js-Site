@@ -17,7 +17,7 @@ const Navbar = ({ totalItems }) => {
     const classes = useStyles();
 
     return (
-        <div>
+        <>
             <AppBar position="fixed" className={ classes.appBar } color="inherit">
                 <Toolbar>
                     <Typography>
@@ -34,7 +34,7 @@ const Navbar = ({ totalItems }) => {
                     </div>
                 </Toolbar>
             </AppBar>
-        </div>
+        </>
     )
 }
 
