@@ -11,11 +11,12 @@ import { AddShoppingCart } from "@material-ui/icons";
 import useStyles from "./styles";
 import DOMPurify from "dompurify";
 
-const Product = ( { product, onAddToCart } ) => {
+const Product = ({ product, onAddToCart }) => {
 
     const classes = useStyles();
-    
+
     const data = ( product.description );
+    
     const sanitizedData = () => ({
         __html: DOMPurify.sanitize(data)
     });

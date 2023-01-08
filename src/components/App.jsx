@@ -26,9 +26,9 @@ const App = () => {
 
         const item = await commerce.cart.add(productId, quantity);
 
-        setCart(item.cart);
+        setCart(item);
 
-    }
+    };
 
     useEffect(() => {
 
