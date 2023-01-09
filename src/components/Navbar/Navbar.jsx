@@ -11,6 +11,7 @@ import {
 import { ShoppingCart } from "@material-ui/icons";
 import siteLogo from "../../assets/logos/Soeb-USB-symbol.svg";
 import useStyles from "./styles";
+import { Link } from "react-router-dom";
 
 const Navbar = ({ totalItems }) => {
 
@@ -20,13 +21,12 @@ const Navbar = ({ totalItems }) => {
         <>
             <AppBar position="fixed" className={ classes.appBar } color="inherit">
                 <Toolbar>
-                    <Typography>
+                    <Typography component={ Link } to='/'>
                         <img src={ siteLogo } alt="Commerce.js" height="25px" className={ classes.image }/>
-                        Commerce.js
                     </Typography>
                     <div className={ classes.grow } />
                     <div className={ classes.button }>
-                        <IconButton aria-label="Show cart items" color="inherit">
+                        <IconButton component={ Link } to="/cart" aria-label="Show cart items" color="inherit">
                             <Badge badgeContent={ totalItems } color="secondary">
                                 <ShoppingCart />
                             </Badge>
