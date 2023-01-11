@@ -34,10 +34,25 @@ const App = () => {
 
     const handleUpdateCartQty = async (productId, quantity) => {
 
-        const response = await commerce.cart.update(productId, { quantity })
+        const response = await commerce.cart.update(productId, { quantity });
 
-        setCart(response)
+        setCart(response);
     };
+
+    const handleRemoveFromCart = async (productId) => {
+
+        const response = await commerce.cart.remove(productId);
+
+        setCart(response);
+
+    }
+
+    const handleEmptyCart = async () => {
+
+        const cart = await commerce.cart.empty();
+
+        setCart(cart);
+    }
 
     useEffect(() => {
 
@@ -47,14 +62,22 @@ const App = () => {
     }, []);
 
     // console.log(products);
-    console.log(cart);
+    // console.log(cart);
 
     return (
         <Router>
             <Navbar totalItems={ cart.total_items }/>
             <Routes>
                 <Route path='/' element={<Products products={products} onAddToCart={handleAddToCart} />} />
-                <Route path='/cart' element={<Cart cart={cart} />} />
+                <Route path='/cart' 
+                    element={
+                        <Cart   cart={cart} 
+                                handleUpdateCartQty={ handleUpdateCartQty }
+                                handleRemoveFromCart={ handleRemoveFromCart }
+                                handleEmptyCart={ handleEmptyCart } 
+                        />
+                    } 
+                />
             </Routes>
         </Router>
     )
