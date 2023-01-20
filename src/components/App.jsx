@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Products from "./products/Products";
 import Navbar from "./Navbar/Navbar"
 import Cart from "./Cart/Cart";
+import Checkout from "./CheckoutForm/Checkout/Checkout";
 import { commerce } from "../lib/commerce";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -68,7 +69,7 @@ const App = () => {
         <Router>
             <Navbar totalItems={ cart.total_items }/>
             <Routes>
-                <Route path='/' element={<Products products={products} onAddToCart={handleAddToCart} />} />
+                <Route path='/' element={ <Products products={products} onAddToCart={handleAddToCart} /> } />
                 <Route path='/cart' 
                     element={
                         <Cart   cart={cart} 
@@ -78,6 +79,7 @@ const App = () => {
                         />
                     } 
                 />
+                <Route path='/checkout' element={ <Checkout /> } />
             </Routes>
         </Router>
     )
