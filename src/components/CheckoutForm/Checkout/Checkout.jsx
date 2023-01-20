@@ -9,14 +9,16 @@ import {
         Stepper,
         Typography
     } from "@material-ui/core";
+import useStyles from "./styles";
 
 const steps = ['Shipping', 'Payment'] 
 
 const Checkout = () => {
 
     const [activeStep, setActiveStep] = useState(0);
+    const classes = useStyles();
 
-    render (
+    return (
         <>
             <div className={ classes.toolbar }></div>
             <main className={ classes.layout }>
