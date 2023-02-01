@@ -6,12 +6,12 @@ import {
         Grid,
         Typography
 } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import FormInput from "./FormInput";
 import { commerce } from "../../lib/commerce"
 
-const AddressForm = () => {
+const AddressForm = ({ checkoutToken }) => {
 
     const   methods = useForm();
 
@@ -21,13 +21,27 @@ const AddressForm = () => {
             [shippingRegion, setShippingRegion] = useState(''),
             [shippingOptions, setShippingOptions] = useState([]),
             [shippingOption, setShippingOption] = useState('');
+    
+    const   countries = Object.entries(shippingCountries).map(([code, name]) => ({ id: code, label: name }));
+
+    console.log(countries);
 
     const   fetchShippingCountries = async (checkoutTokenID) => {
         
         const response = await commerce.services.localeListShippingCountries(checkoutTokenID);
 
-        setShippingCountries(response)
+        console.log(response.countries);
+
+        setShippingCountries(response.countries);
+
+        setShippingCountry(Object.keys(response.countries)[0][1]);
     }
+
+    useEffect(() => {
+
+        fetchShippingCountries(checkoutToken.id)
+
+    }, []);
 
     return (
         <>
@@ -75,15 +89,17 @@ const AddressForm = () => {
                             name="cellNumber"
                             label="Cell / Phone Number"
                         />
-                       {/*  <Grid item xs={ 12 } sm={ 6 }>
+                       <Grid item xs={ 12 } sm={ 6 }>
                             <InputLabel>Shipping Country</InputLabel>
-                            <Select value={} fullWidth onChange={}>
-                                <MenuItem key={} value={}>
-                                    Select
-                                </MenuItem>
+                            <Select value={ shippingCountry } fullWidth onChange={ (e) => setShippingCountry(e.target.value) }>
+                                { countries.map((country) => (
+                                    <MenuItem key={ country.id } value={ country.id }>
+                                        { country.label }
+                                    </MenuItem>
+                                ))};                              
                             </Select>
                         </Grid>
-                        <Grid item xs={ 12 } sm={ 6 }>
+                        {/* <Grid item xs={ 12 } sm={ 6 }>
                             <InputLabel>Shipping Region</InputLabel>
                             <Select value={} fullWidth onChange={}>
                                 <MenuItem key={} value={}>
