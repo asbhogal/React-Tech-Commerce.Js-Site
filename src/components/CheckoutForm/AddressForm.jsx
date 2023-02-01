@@ -24,6 +24,41 @@ const AddressForm = () => {
                             name="firstName"
                             label="First Name"
                         />
+                        <FormInput 
+                            required
+                            name="lastName"
+                            label="Last Name"
+                        />
+                        <FormInput 
+                            required
+                            name="addressLine1"
+                            label="Flat/House No."
+                        />
+                        <FormInput 
+                            required
+                            name="addressLine2"
+                            label="Address Line 1"
+                        />
+                        <FormInput 
+                            required
+                            name="town"
+                            label="Town/City"
+                        />
+                        <FormInput 
+                            required
+                            name="ZipPostCode"
+                            label="ZIP/Post Code"
+                        />
+                        <FormInput 
+                            required
+                            name="emailAddress"
+                            label="Email Address"
+                        />
+                        <FormInput 
+                            required
+                            name="cellNumber"
+                            label="Cell / Phone Number"
+                        />
                     </Grid>
                 </form>
             </FormProvider>
