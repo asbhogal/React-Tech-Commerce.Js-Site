@@ -11,7 +11,7 @@ This project is coded using HTML5, CSS3, SCSS, JavaScript (ES6), React and lever
 <strong>:heavy_check_mark: Features:</strong><br>
   - eCommerce Site with several dummy products
   - Allows multiple purchases of products
-  - Leverages Commerce.js and Stripe gateway for data storage and transactions
+  - Leverages <code>Commerce.js</code> and <code>Stripe</code> gateway for data storage and transactions
   - Sends an email confirmation to the customer post-purchase
   - Form validation with dynamic location fields (using <code>react-hook-form</code>)
   - <code>DOMPurify</code> to sanitize HTML codes from Commerce.js
