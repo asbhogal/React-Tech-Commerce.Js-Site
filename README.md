@@ -13,9 +13,9 @@ This project is coded using HTML5, CSS3, SCSS, JavaScript (ES6), React and lever
   - Allows multiple purchases of products
   - Leverages Commerce.js and Stripe gateway for data storage and transactions
   - Sends an email confirmation to the customer post-purchase
-  - Form validation with dynamic location fields
-  - DOMPurify to sanitize HTML codes from Commerce.js
-  - Material UI used to render stylized React components
+  - Form validation with dynamic location fields (using <code>react-hook-form</code>)
+  - <code>DOMPurify</code> to sanitize HTML codes from Commerce.js
+  - <code>Material UI</code> used to render stylized React components
   - Fully responsive
   - Optimised for the web
 
