@@ -9,8 +9,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const App = () => {
 
-    const [products, setProducts] = useState([]);
-    const [cart, setCart] = useState({});
+    const   [products, setProducts] = useState([]),
+            [cart, setCart] = useState({});
 
     const fetchProducts = async () => {
 

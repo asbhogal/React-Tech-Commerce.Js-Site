@@ -6,12 +6,20 @@ import {
         Grid,
         Typography
 } from "@material-ui/core";
+import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import FormInput from "./FormInput";
 
 const AddressForm = () => {
 
     const methods = useForm();
+
+    const   [shippingCountries, setShippingCountries] = useState([]),
+            [shippingCountry, setShippingCountry] = useState(''),
+            [shippingRegions, setShippingRegions] = useState([]),
+            [shippingRegion, setShippingRegion] = useState(''),
+            [shippingOptions, setShippingOptions] = useState([]),
+            [shippingOption, setShippingOption] = useState('');
 
     return (
         <>
@@ -59,6 +67,30 @@ const AddressForm = () => {
                             name="cellNumber"
                             label="Cell / Phone Number"
                         />
+                        <Grid item xs={ 12 } sm={ 6 }>
+                            <InputLabel>Shipping Country</InputLabel>
+                            <Select value={} fullWidth onChange={}>
+                                <MenuItem key={} value={}>
+                                    Select
+                                </MenuItem>
+                            </Select>
+                        </Grid>
+                        <Grid item xs={ 12 } sm={ 6 }>
+                            <InputLabel>Shipping Region</InputLabel>
+                            <Select value={} fullWidth onChange={}>
+                                <MenuItem key={} value={}>
+                                    Select
+                                </MenuItem>
+                            </Select>
+                        </Grid>
+                        <Grid item xs={ 12 } sm={ 6 }>
+                            <InputLabel>Shipping Options</InputLabel>
+                            <Select value={} fullWidth onChange={}>
+                                <MenuItem key={} value={}>
+                                    Select
+                                </MenuItem>
+                            </Select>
+                        </Grid>
                     </Grid>
                 </form>
             </FormProvider>
