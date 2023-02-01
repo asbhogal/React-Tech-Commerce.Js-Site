@@ -22,6 +22,13 @@ const AddressForm = () => {
             [shippingOptions, setShippingOptions] = useState([]),
             [shippingOption, setShippingOption] = useState('');
 
+    const   fetchShippingCountries = async (checkoutTokenID) => {
+        
+        const response = await commerce.services.localeListShippingCountries(checkoutTokenID);
+
+        setShippingCountries(response)
+    }
+
     return (
         <>
             <Typography variant="h6" gutterBottom>Shipping address</Typography>
@@ -68,7 +75,7 @@ const AddressForm = () => {
                             name="cellNumber"
                             label="Cell / Phone Number"
                         />
-                        <Grid item xs={ 12 } sm={ 6 }>
+                       {/*  <Grid item xs={ 12 } sm={ 6 }>
                             <InputLabel>Shipping Country</InputLabel>
                             <Select value={} fullWidth onChange={}>
                                 <MenuItem key={} value={}>
@@ -91,7 +98,7 @@ const AddressForm = () => {
                                     Select
                                 </MenuItem>
                             </Select>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                 </form>
             </FormProvider>

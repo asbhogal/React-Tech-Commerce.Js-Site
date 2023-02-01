@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { commerce } from "../../../lib/commerce";
 import { 
         CircularProgress,
         Divider,
@@ -16,14 +17,32 @@ import PaymentForm from "../PaymentForm";
 
 const steps = ['Shipping address', 'Payment details'] 
 
-const Checkout = () => {
+const Checkout = ({ cart }) => {
 
     const   [activeStep, setActiveStep] = useState(0),
+            [checkoutToken, setCheckoutToken] = useState(null),
             classes = useStyles();
 
     const Form = () => activeStep === 0 
     ? <AddressForm /> 
     : <PaymentForm />;
+
+    useEffect(() => {
+        const generateToken = async () => {
+            try {
+                const token = await commerce.checkout.generateToken(cart.id, {type: 'cart'});
+                
+                console.log(token);
+
+                setCheckoutToken(token);
+
+            } catch (error) {
+
+            }
+        }
+
+        generateToken();
+    }, []);
 
     return (
         <>
