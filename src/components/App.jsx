@@ -17,7 +17,7 @@ const App = () => {
         const { data } = await commerce.products.list();
 
         setProducts(data);
-    }
+    };
 
     const fetchCart = async () => {
 
@@ -46,14 +46,14 @@ const App = () => {
 
         setCart(response);
 
-    }
+    };
 
     const handleEmptyCart = async () => {
 
         const response = await commerce.cart.empty();
 
         setCart(response);
-    }
+    };
 
     useEffect(() => {
 
@@ -83,6 +83,6 @@ const App = () => {
             </Routes>
         </Router>
     )
-}
+};
 
 export default App;

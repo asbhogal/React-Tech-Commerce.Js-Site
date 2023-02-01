@@ -44,6 +44,6 @@ const Product = ({ product, onAddToCart }) => {
             </CardActions>
         </Card>
     )
-}
+};
 
 export default Product;

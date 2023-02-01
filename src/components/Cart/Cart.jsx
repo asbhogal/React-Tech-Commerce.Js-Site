@@ -49,6 +49,6 @@ const Cart = ({ cart, handleUpdateCartQty, handleRemoveFromCart, handleEmptyCart
             { !cart.line_items.length ? <EmptyCart /> : <FilledCart /> }
         </Container>
     )
-}
+};
 
 export default Cart;

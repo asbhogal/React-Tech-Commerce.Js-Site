@@ -33,6 +33,6 @@ const CartItem = ({ item, onUpdateCartQty, onRemoveFromCart }) => {
             </CardActions>
         </Card>
     )
-}
+};
 
 export default CartItem;
