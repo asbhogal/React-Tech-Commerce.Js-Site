@@ -1,7 +1,7 @@
 const PaymentForm = () => {
     return (
         <>
-
+            Payment form
         </>
     )
 };

@@ -1,7 +1,7 @@
 const AddressForm = () => {
     return (
         <>
-            AddressForm
+            Address Form
         </>
     )
 };
