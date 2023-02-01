@@ -9,10 +9,11 @@ import {
 import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import FormInput from "./FormInput";
+import { commerce } from "../../lib/commerce"
 
 const AddressForm = () => {
 
-    const methods = useForm();
+    const   methods = useForm();
 
     const   [shippingCountries, setShippingCountries] = useState([]),
             [shippingCountry, setShippingCountry] = useState(''),
