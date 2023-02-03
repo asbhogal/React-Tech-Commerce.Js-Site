@@ -18,6 +18,7 @@ const   path = require("path"),
             new HTMLWebpackPlugin({
                 title: "React Technology Commerce Site",
                 author: "Aman Singh Bhogal & JavaScript Mastery",
+                favicon: "./src/assets/logos/Soeb-USB-symbol.svg",
                 template: "./src/index.html"
             }),
         ];
