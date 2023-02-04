@@ -10,8 +10,9 @@ import { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import FormInput from "./FormInput";
 import { commerce } from "../../lib/commerce"
+import { Link } from "react-router-dom";
 
-const AddressForm = ({ checkoutToken }) => {
+const AddressForm = ({ checkoutToken, next }) => {
 
     const   methods = useForm();
 
@@ -81,7 +82,7 @@ const AddressForm = ({ checkoutToken }) => {
         <>
             <Typography variant="h6" gutterBottom>Shipping address</Typography>
             <FormProvider { ...methods }>
-                <form onSubmit=''>
+                <form onSubmit={ methods.handleSubmit((data) => next({ ...data, shippingCountry, shippingRegion, shippingOption })) }>
                     <Grid container spacing={ 3 }>
                         <FormInput 
                             name="firstName"
@@ -146,6 +147,11 @@ const AddressForm = ({ checkoutToken }) => {
                             </Select>
                         </Grid>
                     </Grid>
+                    <br />
+                    <div style={ { display: 'flex', justifyContent: 'space-between' } }>
+                        <Button component={ Link } to="/cart" variant="outlined">Back To Cart</Button>
+                        <Button type="submit" variant="contained" color="primary">Proceed To Payment</Button>
+                    </div>
                 </form>
             </FormProvider>
         </>
