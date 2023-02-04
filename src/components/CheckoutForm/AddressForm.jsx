@@ -5,7 +5,7 @@ import {
         Button,
         Grid,
         Typography
-} from "@material-ui/core";
+        } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import FormInput from "./FormInput";
@@ -150,7 +150,7 @@ const AddressForm = ({ checkoutToken, next }) => {
                     <br />
                     <div style={ { display: 'flex', justifyContent: 'space-between' } }>
                         <Button component={ Link } to="/cart" variant="outlined">Back To Cart</Button>
-                        <Button type="submit" variant="contained" color="primary">Proceed To Payment</Button>
+                        <Button type="submit" color="primary" variant="contained">Proceed To Payment</Button>
                     </div>
                 </form>
             </FormProvider>

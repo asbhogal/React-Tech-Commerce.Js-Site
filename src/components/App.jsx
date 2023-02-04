@@ -62,9 +62,6 @@ const App = () => {
 
     }, []);
 
-    // console.log(products);
-    // console.log(cart);
-
     return (
         <Router>
             <Navbar totalItems={ cart.total_items }/>
