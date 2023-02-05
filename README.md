@@ -4,9 +4,9 @@
 
 </div>
 
-An eCommerce site by a fictional company which offers a range of technology products. The site allows customers to browse the items, switch between different sets of data and add single or multiple quantities of products to the card. A Stripe gateway is also configured, directing them to the checkout and payment page and, upon a successful transaction, returns a confirmation page and sends them an invoice via email.
+An eCommerce site by a fictional company which offers a range of technology products. A Stripe gateway is also configured (in test mode) directing them to the checkout and payment page and, upon sending a confirmation email upon completion.
 
-This project is coded using HTML5, CSS3, SCSS, JavaScript (ES6), React and leverages Babel and Webpack for production build. This repo is currently under development.
+This project is coded using <code>HTML5, CSS3, SCSS, JavaScript (ES6), React</code> and leverages <code>Babel</code> and <code>Webpack</code> for production build. This repo is currently under development.
 
 <strong>:heavy_check_mark: Features:</strong><br>
   - eCommerce Site with several dummy products
