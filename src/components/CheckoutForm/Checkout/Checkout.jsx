@@ -26,7 +26,7 @@ const Checkout = ({ cart }) => {
 
     const Form = () => activeStep === 0 
     ? <AddressForm checkoutToken={ checkoutToken } next={ next }/> 
-    : <PaymentForm checkoutToken={ checkoutToken } shippingData={ shippingData }/>;
+    : <PaymentForm checkoutToken={ checkoutToken } shippingData={ shippingData } prevStep={ prevStep }/>;
 
     useEffect(() => {
 
