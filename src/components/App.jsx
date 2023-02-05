@@ -10,7 +10,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 const App = () => {
 
     const   [products, setProducts] = useState([]),
-            [cart, setCart] = useState({});
+            [cart, setCart] = useState({}),
+            [order, setOrder] = useState({}),
+            [errorMessage, setErrorMessage] = useState('');
 
     const fetchProducts = async () => {
 
@@ -38,6 +40,7 @@ const App = () => {
         const response = await commerce.cart.update(productId, { quantity });
 
         setCart(response);
+
     };
 
     const handleRemoveFromCart = async (productId) => {
@@ -53,11 +56,39 @@ const App = () => {
         const response = await commerce.cart.empty();
 
         setCart(response);
+
     };
+
+    const refreshCart = async () => {
+
+        const newCart = await commerce.cart.refresh();
+
+        setCart(cart);
+
+    }
+
+    const handleCaptureCheckout = async (checkoutTokenID, newOrder) => {
+
+        try {
+
+            const incomingOrder = await commerce.checkout.capture(checkoutTokenID, newOrder);
+
+            setOrder(incomingOrder);
+
+            refreshCart();
+
+        } catch (error) {
+
+            setErrorMessage(error.data.error.message);
+
+        }
+
+    }
 
     useEffect(() => {
 
         fetchProducts();
+        
         fetchCart();
 
     }, []);
@@ -77,7 +108,12 @@ const App = () => {
                     } 
                 />
                 <Route path='/checkout' element={
-                        <Checkout cart={ cart } /> 
+                        <Checkout 
+                            cart={ cart }
+                            order={ order }
+                            onCaptureCheckout={ handleCaptureCheckout }
+                            error={ errorMessage }
+                        /> 
                     } />
             </Routes>
         </Router>

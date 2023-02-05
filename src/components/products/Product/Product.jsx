@@ -21,8 +21,6 @@ const Product = ({ product, onAddToCart }) => {
         __html: DOMPurify.sanitize(data)
     });
 
-    //console.log(product);
-
     return (
         <Card className={ classes.root }>
             <CardMedia className={ classes.media } image={ product.image.url } title={ product.name } />

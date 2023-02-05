@@ -93,11 +93,11 @@ const AddressForm = ({ checkoutToken, next }) => {
                             label="Last Name"
                         />
                         <FormInput 
-                            name="addressLine1"
+                            name="propertyNumber"
                             label="Flat/House No."
                         />
                         <FormInput 
-                            name="addressLine2"
+                            name="addressLine1"
                             label="Address Line 1"
                         />
                         <FormInput 

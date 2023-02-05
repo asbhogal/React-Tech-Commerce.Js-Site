@@ -17,7 +17,7 @@ import PaymentForm from "../PaymentForm";
 
 const steps = ['Shipping address', 'Payment details'] 
 
-const Checkout = ({ cart }) => {
+const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
 
     const   [activeStep, setActiveStep] = useState(0),
             [checkoutToken, setCheckoutToken] = useState(null),
@@ -25,8 +25,19 @@ const Checkout = ({ cart }) => {
             classes = useStyles();
 
     const Form = () => activeStep === 0 
-    ? <AddressForm checkoutToken={ checkoutToken } next={ next }/> 
-    : <PaymentForm checkoutToken={ checkoutToken } shippingData={ shippingData } prevStep={ prevStep }/>;
+    ? <AddressForm 
+            checkoutToken={ checkoutToken } 
+            next={ next }
+        /> 
+
+    : <PaymentForm 
+            checkoutToken={ checkoutToken } 
+            shippingData={ shippingData } 
+            prevStep={ prevStep } 
+            onCaptureCheckout={ onCaptureCheckout }
+            nextStep={ nextStep }
+
+        />;
 
     useEffect(() => {
 

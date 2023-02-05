@@ -15,7 +15,56 @@ import Review from "./Review";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
-const PaymentForm = ({ checkoutToken, prevStep }) => {
+const PaymentForm = ({ checkoutToken, shippingData, prevStep, onCaptureCheckout, nextStep}) => {
+
+    const handleSubmit = async () => {
+
+        event.preventDefault();
+
+        if (!stripe || !elements) return;
+
+        const   cardElement = element.getElement(CardElement),
+                { error, paymentMethod  } = await stripe.createPaymentMethod({ 
+                    type: 'card',
+                    card: cardElement });
+
+        if(error) {
+            console.log(error);
+        } else {
+            const orderData = {
+                line_items: checkoutToken.line_items,
+                customer: {
+                    firstname: shippingData.firstName,
+                    lastname: shippingData.lastName,
+                    email: shippingData.emailAddress,
+                    cell_number: shippingData.cellNumber
+                },
+                shipping: {
+                    name: 'Primary',
+                    property: shippingData.propertyNumber,
+                    street: shippingData.addressLine1,
+                    town: shippingData.town,
+                    property_code: shippingData.ZipPostCode,
+                    county_state: shippingData.shippingSubdivision,
+                    country: shippingData.shippingCountry
+                },
+                fulfillment: {
+                    shipping_method: shippingData.shippingOption,
+                },
+                payment: {
+                    gateway: 'stripe',
+                    stripe: {
+                        payment_method_id: paymentMethod.id
+                    }
+                }
+            }
+
+            onCaptureCheckout(checkoutToken.id, orderData);
+
+            nextStep();
+        }
+    }
+
     return (
         <>
             <Review checkoutToken={ checkoutToken }/>
@@ -24,7 +73,7 @@ const PaymentForm = ({ checkoutToken, prevStep }) => {
             <Elements stripe={ stripePromise }>
                 <ElementsConsumer>
                     { ({ elements, stripe }) => (
-                        <form>
+                        <form onSubmit={ (e) => handleSubmit(e, elements, stripe) }>
                             <CardElement />
                             <br /> <br />
                             <div style={ { display: 'flex', justifyContent: 'space-between' } }>
