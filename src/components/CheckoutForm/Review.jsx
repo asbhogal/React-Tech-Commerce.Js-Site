@@ -6,9 +6,6 @@ import {
     } from "@material-ui/core";
 
 const Review = ({ checkoutToken }) => {
-
-    console.log(checkoutToken.line_items);
-
     return (
         <>
             <Typography variant="h6" gutterBottom>Order Summary</Typography>

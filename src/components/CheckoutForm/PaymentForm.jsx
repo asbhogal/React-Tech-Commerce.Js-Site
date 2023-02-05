@@ -17,16 +17,17 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const PaymentForm = ({ checkoutToken, shippingData, prevStep, onCaptureCheckout, nextStep, timeout}) => {
 
-    const handleSubmit = async () => {
+    console.log(shippingData);
+
+    const handleSubmit = async (event, elements, stripe) => {
 
         event.preventDefault();
 
         if (!stripe || !elements) return;
 
-        const   cardElement = element.getElement(CardElement),
-                { error, paymentMethod  } = await stripe.createPaymentMethod({ 
-                    type: 'card',
-                    card: cardElement });
+        const   cardElement = elements.getElement(CardElement);
+
+        const   { error, paymentMethod  } = await stripe.createPaymentMethod({type: 'card', card: cardElement });
 
         if(error) {
 
@@ -35,14 +36,20 @@ const PaymentForm = ({ checkoutToken, shippingData, prevStep, onCaptureCheckout,
         } else {
 
             const orderData = {
+
                 line_items: checkoutToken.line_items,
+
                 customer: {
+                    
                     firstname: shippingData.firstName,
                     lastname: shippingData.lastName,
                     email: shippingData.emailAddress,
                     cell_number: shippingData.cellNumber
+
                 },
+
                 shipping: {
+
                     name: 'Primary',
                     property: shippingData.propertyNumber,
                     street: shippingData.addressLine1,
@@ -50,14 +57,23 @@ const PaymentForm = ({ checkoutToken, shippingData, prevStep, onCaptureCheckout,
                     property_code: shippingData.ZipPostCode,
                     county_state: shippingData.shippingSubdivision,
                     country: shippingData.shippingCountry
+
                 },
+
                 fulfillment: {
-                    shipping_method: shippingData.shippingOption,
+
+                    shipping_method: shippingData.shippingOption
+
                 },
+
                 payment: {
+
                     gateway: 'stripe',
+
                     stripe: {
+
                         payment_method_id: paymentMethod.id
+
                     }
                 }
             }
@@ -92,7 +108,7 @@ const PaymentForm = ({ checkoutToken, shippingData, prevStep, onCaptureCheckout,
                 </ElementsConsumer>
             </Elements>
         </>
-    )
+    );
 };
 
 export default PaymentForm;

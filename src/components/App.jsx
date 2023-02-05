@@ -19,6 +19,7 @@ const App = () => {
         const { data } = await commerce.products.list();
 
         setProducts(data);
+
     };
 
     const fetchCart = async () => {
@@ -63,9 +64,9 @@ const App = () => {
 
         const newCart = await commerce.cart.refresh();
 
-        setCart(cart);
+        setCart(newCart);
 
-    }
+    };
 
     const handleCaptureCheckout = async (checkoutTokenID, newOrder) => {
 
@@ -83,7 +84,7 @@ const App = () => {
 
         }
 
-    }
+    };
 
     useEffect(() => {
 

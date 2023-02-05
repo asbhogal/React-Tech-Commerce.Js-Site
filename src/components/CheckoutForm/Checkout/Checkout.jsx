@@ -11,12 +11,12 @@ import {
         Stepper,
         Typography
     } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import useStyles from "./styles";
 import AddressForm from "../AddressForm";
 import PaymentForm from "../PaymentForm";
 
-const steps = ['Shipping address', 'Payment details'] 
+const steps = ['Shipping address', 'Payment details']; 
 
 const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
 
@@ -26,23 +26,39 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
             [isFinished, setIsFinished] = useState(false);
     
     const   classes = useStyles(),
-            history = useHistory();
-
-    const Form = () => activeStep === 0 
-    ? <AddressForm 
-            checkoutToken={ checkoutToken } 
-            next={ next }
-        /> 
-
-    : <PaymentForm 
-            checkoutToken={ checkoutToken } 
-            shippingData={ shippingData } 
-            prevStep={ prevStep } 
-            onCaptureCheckout={ onCaptureCheckout }
-            nextStep={ nextStep }
-            timeout={ timeout }
-        />;
+            Navigate = useNavigate();
     
+    const   nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1),
+            prevStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
+
+    useEffect(() => {
+
+        const generateToken = async () => {
+
+            try {
+                const token = await commerce.checkout.generateToken(cart.id, {type: 'cart'});
+                
+                setCheckoutToken(token);
+
+            } catch (error) {
+
+                Navigate('/');
+
+            }
+        }
+
+        generateToken();
+
+    }, [cart]);
+
+    const next = (data) => {
+
+        setShippingData(data);
+
+        nextStep();
+
+    }
+
     let Confirmation = () => order.customer ? (
         <>
             <div>
@@ -75,37 +91,21 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
             <Button component={ Link } to="/" variant="outlined" type="button">Back To Home</Button>
         </>
     }
+    
+    const Form = () => activeStep === 0 
+    ? <AddressForm 
+            checkoutToken={ checkoutToken } 
+            next={ next }
+        /> 
 
-    useEffect(() => {
-
-        const generateToken = async () => {
-
-            try {
-                const token = await commerce.checkout.generateToken(cart.id, {type: 'cart'});
-                
-                setCheckoutToken(token);
-
-            } catch (error) {
-
-                history.pushState('/');
-
-            }
-        }
-
-        generateToken();
-
-    }, [cart]);
-
-    const   nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1),
-            prevStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
-
-    const next = (data) => {
-
-        setShippingData(data);
-
-        nextStep();
-
-    }
+    : <PaymentForm 
+            checkoutToken={ checkoutToken } 
+            shippingData={ shippingData } 
+            prevStep={ prevStep } 
+            onCaptureCheckout={ onCaptureCheckout }
+            nextStep={ nextStep }
+            timeout={ timeout }
+        />;
 
     const timeout = () => {
 
@@ -114,7 +114,7 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
             setIsFinished(true)
 
         }, 3000);
-        
+
     }
 
     return (
