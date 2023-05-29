@@ -1,114 +1,114 @@
-import {
-        Typography,
-        Button,
-        Divider
-    } from "@material-ui/core";
+import { Typography, Button, Divider } from "@material-ui/core";
 
 import {
-        Elements,
-        CardElement,
-        ElementsConsumer
-    } from "@stripe/react-stripe-js";
+  Elements,
+  CardElement,
+  ElementsConsumer,
+} from "@stripe/react-stripe-js";
 
 import { loadStripe } from "@stripe/stripe-js";
 import Review from "./Review";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
-const PaymentForm = ({ checkoutToken, shippingData, prevStep, onCaptureCheckout, nextStep, timeout}) => {
+const PaymentForm = ({
+  checkoutToken,
+  shippingData,
+  prevStep,
+  onCaptureCheckout,
+  nextStep,
+  timeout,
+}) => {
+  console.log(shippingData);
 
-    console.log(shippingData);
+  const handleSubmit = async (event, elements, stripe) => {
+    event.preventDefault();
 
-    const handleSubmit = async (event, elements, stripe) => {
+    if (!stripe || !elements) return;
 
-        event.preventDefault();
+    const cardElement = elements.getElement(CardElement);
 
-        if (!stripe || !elements) return;
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: cardElement,
+    });
 
-        const   cardElement = elements.getElement(CardElement);
+    if (error) {
+      console.log(error);
+    } else {
+      const orderData = {
+        line_items: checkoutToken.line_items,
 
-        const   { error, paymentMethod  } = await stripe.createPaymentMethod({type: 'card', card: cardElement });
+        customer: {
+          firstname: shippingData.firstName,
+          lastname: shippingData.lastName,
+          email: shippingData.emailAddress,
+          cell_number: shippingData.cellNumber,
+        },
 
-        if(error) {
+        shipping: {
+          name: "Primary",
+          property: shippingData.propertyNumber,
+          street: shippingData.addressLine1,
+          town: shippingData.town,
+          property_code: shippingData.ZipPostCode,
+          county_state: shippingData.shippingSubdivision,
+          country: shippingData.shippingCountry,
+        },
 
-            console.log(error);
+        fulfillment: {
+          shipping_method: shippingData.shippingOption,
+        },
 
-        } else {
+        payment: {
+          gateway: "stripe",
 
-            const orderData = {
+          stripe: {
+            payment_method_id: paymentMethod.id,
+          },
+        },
+      };
 
-                line_items: checkoutToken.line_items,
+      onCaptureCheckout(checkoutToken.id, orderData);
 
-                customer: {
-                    
-                    firstname: shippingData.firstName,
-                    lastname: shippingData.lastName,
-                    email: shippingData.emailAddress,
-                    cell_number: shippingData.cellNumber
+      timeout();
 
-                },
-
-                shipping: {
-
-                    name: 'Primary',
-                    property: shippingData.propertyNumber,
-                    street: shippingData.addressLine1,
-                    town: shippingData.town,
-                    property_code: shippingData.ZipPostCode,
-                    county_state: shippingData.shippingSubdivision,
-                    country: shippingData.shippingCountry
-
-                },
-
-                fulfillment: {
-
-                    shipping_method: shippingData.shippingOption
-
-                },
-
-                payment: {
-
-                    gateway: 'stripe',
-
-                    stripe: {
-
-                        payment_method_id: paymentMethod.id
-
-                    }
-                }
-            }
-
-            onCaptureCheckout(checkoutToken.id, orderData);
-
-            timeout();
-
-            nextStep();
-        }
+      nextStep();
     }
+  };
 
-    return (
-        <>
-            <Review checkoutToken={ checkoutToken }/>
-            <Divider />
-            <Typography variant="h6" gutterBottom style={ { margin: '20px 0' } }>Payment Method</Typography>
-            <Elements stripe={ stripePromise }>
-                <ElementsConsumer>
-                    { ({ elements, stripe }) => (
-                        <form onSubmit={ (e) => handleSubmit(e, elements, stripe) }>
-                            <CardElement />
-                            <br /> <br />
-                            <div style={ { display: 'flex', justifyContent: 'space-between' } }>
-                                <Button variant="outlined" onClick={ prevStep }>Back</Button>
-                                <Button type="submit" variant="contained" color="primary" disabled={ !stripe }>
-                                    Pay { checkoutToken.subtotal.formatted_with_symbol }
-                                </Button>
-                            </div>
-                        </form>
-                    ) }
-                </ElementsConsumer>
-            </Elements>
-        </>
-    );
+  return (
+    <>
+      <Review checkoutToken={checkoutToken} />
+      <Divider />
+      <Typography variant="h6" gutterBottom style={{ margin: "20px 0" }}>
+        Payment Method
+      </Typography>
+      <Elements stripe={stripePromise}>
+        <ElementsConsumer>
+          {({ elements, stripe }) => (
+            <form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
+              <CardElement />
+              <br /> <br />
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Button variant="outlined" onClick={prevStep}>
+                  Back
+                </Button>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  disabled={!stripe}
+                >
+                  Pay {checkoutToken.subtotal.formatted_with_symbol}
+                </Button>
+              </div>
+            </form>
+          )}
+        </ElementsConsumer>
+      </Elements>
+    </>
+  );
 };
 
 export default PaymentForm;
