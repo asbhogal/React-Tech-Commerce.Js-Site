@@ -4,45 +4,45 @@ import {
   Toolbar,
   IconButton,
   Badge,
-  MenuItem,
-  Menu,
   Typography,
-} from "@material-ui/core";
-import { ShoppingCart } from "@material-ui/icons";
-import siteLogo from "../../assets/logos/Soeb-USB-symbol.svg";
-import useStyles from "./styles";
+  Box,
+  CardMedia,
+} from "@mui/material";
+import { ShoppingCart } from "@mui/icons-material";
 import { Link, useLocation } from "react-router-dom";
+import styles from "./styles";
 
-const Navbar = ({ totalItems }) => {
-  const classes = useStyles(),
-    location = useLocation();
+const Navbar = ({ totalItems }: { totalItems: any }) => {
+  const location = useLocation();
 
   return (
     <>
-      <AppBar position="fixed" className={classes.appBar} color="inherit">
+      <AppBar position="fixed" sx={styles.appBar} color="inherit">
         <Toolbar>
           <Typography component={Link} to="/">
-            <img
-              src={siteLogo}
+            <CardMedia
+              component="img"
+              src="./src/assets/logos/Soeb-USB-symbol.svg"
               alt="Commerce.js"
               height="25px"
-              className={classes.image}
+              sx={styles.image}
             />
           </Typography>
-          <div className={classes.grow} />
+          <Box sx={styles.grow} />
           {location.pathname === "/" && (
-            <div className={classes.button}>
+            <Box sx={styles.button}>
               <IconButton
                 component={Link}
                 to="/cart"
                 aria-label="Show cart items"
                 color="inherit"
+                size="large"
               >
                 <Badge badgeContent={totalItems} color="secondary">
                   <ShoppingCart />
                 </Badge>
               </IconButton>
-            </div>
+            </Box>
           )}
         </Toolbar>
       </AppBar>

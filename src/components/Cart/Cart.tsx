@@ -1,22 +1,26 @@
 import React from "react";
-import { Container, Typography, Button, Grid } from "@material-ui/core";
-import useStyles from "./styles";
+import { useNavigate } from "react-router-dom";
+import { Container, Typography, Button, Grid, Box } from "@mui/material";
 import CartItem from "./CartItem/CartItem";
-import { Link } from "react-router-dom";
+import Link from "@mui/material/Link";
+import styles from "./styles";
 
 const Cart = ({
   cart,
   handleUpdateCartQty,
   handleRemoveFromCart,
   handleEmptyCart,
+}: {
+  cart: any;
+  handleUpdateCartQty: any;
+  handleRemoveFromCart: any;
+  handleEmptyCart: any;
 }) => {
-  // console.log(cart);
-  // console.log(classes);
-  const classes = useStyles();
+  const navigate = useNavigate();
   const EmptyCart = () => (
     <Typography variant="subtitle1">
       Your cart is currently empty.<br></br>
-      <Link to="/" className={classes.link}>
+      <Link href="/" sx={styles.link}>
         Return to shop
       </Link>
     </Typography>
@@ -25,7 +29,7 @@ const Cart = ({
   const FilledCart = () => (
     <>
       <Grid container spacing={3}>
-        {cart.line_items.map((item) => (
+        {cart.line_items.map((item: any) => (
           <Grid item xs={12} sm={4} key={item.id}>
             <CartItem
               item={item}
@@ -35,13 +39,13 @@ const Cart = ({
           </Grid>
         ))}
       </Grid>
-      <div className={classes.cardDetails}>
+      <Box sx={styles.cardDetails}>
         <Typography variant="h4">
           Subtotal: {cart.subtotal.formatted_with_symbol}
         </Typography>
         <div>
           <Button
-            className={classes.emptyButton}
+            sx={styles.emptyButton}
             size="large"
             type="button"
             variant="contained"
@@ -51,18 +55,17 @@ const Cart = ({
             Empty Cart
           </Button>
           <Button
-            className={classes.checkoutButton}
+            sx={styles.checkoutButton}
             size="large"
             type="button"
             variant="contained"
             color="primary"
-            component={Link}
-            to="/checkout"
+            onClick={() => navigate("/checkout")}
           >
             Checkout
           </Button>
         </div>
-      </div>
+      </Box>
     </>
   );
 
@@ -70,8 +73,8 @@ const Cart = ({
 
   return (
     <Container>
-      <div className={classes.toolbar} />
-      <Typography className={classes.title} variant="h3">
+      <Box sx={styles.toolbar} />
+      <Typography sx={styles.title} variant="h3">
         Shopping Cart
       </Typography>
       {!cart.line_items.length ? <EmptyCart /> : <FilledCart />}

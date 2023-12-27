@@ -33,7 +33,7 @@ module.exports = {
   mode: mode,
 
   entry: {
-    main: "./src/js/index.js",
+    main: "./src/index.tsx",
   },
 
   output: {
@@ -65,6 +65,11 @@ module.exports = {
         },
       },
       {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        loader: "ts-loader",
+      },
+      {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
         type: "asset/resource",
       },
@@ -74,7 +79,7 @@ module.exports = {
   plugins: plugins,
 
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: [".js", ".jsx", ".tsx", ".ts"],
   },
 
   devtool: "source-map",

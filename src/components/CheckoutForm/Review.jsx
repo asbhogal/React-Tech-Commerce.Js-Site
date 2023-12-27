@@ -1,4 +1,4 @@
-import { Typography, List, ListItem, ListItemText } from "@material-ui/core";
+import { Typography, List, ListItem, ListItemText } from "@mui/material";
 
 const Review = ({ checkoutToken }) => {
   return (

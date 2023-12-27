@@ -1,4 +1,5 @@
 // import { Products, Navbar } from "./components";
+import React from "react";
 import { useState, useEffect } from "react";
 import Products from "./products/Products";
 import Navbar from "./Navbar/Navbar";
@@ -6,10 +7,11 @@ import Cart from "./Cart/Cart";
 import Checkout from "./CheckoutForm/Checkout/Checkout";
 import { commerce } from "../lib/commerce";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ThemeProvider, useTheme } from "@mui/material";
 
 const App = () => {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState({});
+  const [cart, setCart] = useState<{ total_items?: number }>({});
   const [order, setOrder] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -23,19 +25,19 @@ const App = () => {
     setCart(await commerce.cart.retrieve());
   };
 
-  const handleAddToCart = async (productId, quantity) => {
+  const handleAddToCart = async (productId: any, quantity: any) => {
     const item = await commerce.cart.add(productId, quantity);
 
     setCart(item);
   };
 
-  const handleUpdateCartQty = async (productId, quantity) => {
+  const handleUpdateCartQty = async (productId: any, quantity: any) => {
     const response = await commerce.cart.update(productId, { quantity });
 
     setCart(response);
   };
 
-  const handleRemoveFromCart = async (productId) => {
+  const handleRemoveFromCart = async (productId: any) => {
     const response = await commerce.cart.remove(productId);
 
     setCart(response);
@@ -53,7 +55,7 @@ const App = () => {
     setCart(newCart);
   };
 
-  const handleCaptureCheckout = async (checkoutTokenID, newOrder) => {
+  const handleCaptureCheckout = async (checkoutTokenID: any, newOrder: any) => {
     try {
       const incomingOrder = await commerce.checkout.capture(
         checkoutTokenID,
@@ -63,7 +65,7 @@ const App = () => {
       setOrder(incomingOrder);
 
       refreshCart();
-    } catch (error) {
+    } catch (error: any) {
       setErrorMessage(error.data.error.message);
     }
   };
@@ -74,40 +76,44 @@ const App = () => {
     fetchCart();
   }, []);
 
+  const theme = useTheme();
+
   return (
-    <Router>
-      <Navbar totalItems={cart.total_items} />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Products products={products} onAddToCart={handleAddToCart} />
-          }
-        />
-        <Route
-          path="/cart"
-          element={
-            <Cart
-              cart={cart}
-              handleUpdateCartQty={handleUpdateCartQty}
-              handleRemoveFromCart={handleRemoveFromCart}
-              handleEmptyCart={handleEmptyCart}
-            />
-          }
-        />
-        <Route
-          path="/checkout"
-          element={
-            <Checkout
-              cart={cart}
-              order={order}
-              onCaptureCheckout={handleCaptureCheckout}
-              error={errorMessage}
-            />
-          }
-        />
-      </Routes>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Navbar totalItems={cart.total_items} />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Products products={products} onAddToCart={handleAddToCart} />
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <Cart
+                cart={cart}
+                handleUpdateCartQty={handleUpdateCartQty}
+                handleRemoveFromCart={handleRemoveFromCart}
+                handleEmptyCart={handleEmptyCart}
+              />
+            }
+          />
+          <Route
+            path="/checkout"
+            element={
+              <Checkout
+                cart={cart}
+                order={order}
+                onCaptureCheckout={handleCaptureCheckout}
+                error={errorMessage}
+              />
+            }
+          />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 };
 

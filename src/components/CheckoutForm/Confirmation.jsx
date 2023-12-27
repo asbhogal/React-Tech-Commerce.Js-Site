@@ -1,4 +1,4 @@
-/* import { Typography, Divider, CircularProgress } from "@material-ui/core";
+/* import { Typography, Divider, CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
 
 let Confirmation = () => order.customer ? (

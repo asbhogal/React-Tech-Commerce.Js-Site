@@ -6,14 +6,19 @@ import {
   CardActions,
   Typography,
   IconButton,
-} from "@material-ui/core";
-import { AddShoppingCart } from "@material-ui/icons";
-import useStyles from "./styles";
+  Box,
+} from "@mui/material";
+import { AddShoppingCart } from "@mui/icons-material";
 import DOMPurify from "dompurify";
+import styles from "./styles";
 
-const Product = ({ product, onAddToCart }) => {
-  const classes = useStyles();
-
+const Product = ({
+  product,
+  onAddToCart,
+}: {
+  product: any;
+  onAddToCart: any;
+}) => {
   const data = product.description;
 
   const sanitizedData = () => ({
@@ -21,31 +26,32 @@ const Product = ({ product, onAddToCart }) => {
   });
 
   return (
-    <Card className={classes.root}>
+    <Card sx={styles.root}>
       <CardMedia
-        className={classes.media}
+        sx={styles.media}
         image={product.image.url}
         title={product.name}
       />
       <CardContent>
-        <div className={classes.cardContent}>
+        <Box sx={styles.cardContent}>
           <Typography variant="h5" gutterBottom>
             {product.name}
           </Typography>
           <Typography variant="h5" gutterBottom>
             {product.price.formatted_with_symbol}
           </Typography>
-        </div>
+        </Box>
         <Typography
           dangerouslySetInnerHTML={sanitizedData()}
           variant="body2"
           color="textSecondary"
         />
       </CardContent>
-      <CardActions disableSpacing className={classes.cardActions}>
+      <CardActions disableSpacing sx={styles.cardActions}>
         <IconButton
           aria-label="Add To Cart"
           onClick={() => onAddToCart(product.id, 1)}
+          size="large"
         >
           <AddShoppingCart />
         </IconButton>

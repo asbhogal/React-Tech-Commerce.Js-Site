@@ -6,31 +6,38 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-} from "@material-ui/core";
+  Box,
+} from "@mui/material";
+import styles from "./styles";
 
-import useStyles from "./styles";
-
-const CartItem = ({ item, onUpdateCartQty, onRemoveFromCart }) => {
+const CartItem = ({
+  item,
+  onUpdateCartQty,
+  onRemoveFromCart,
+}: {
+  item: any;
+  onUpdateCartQty: any;
+  onRemoveFromCart: any;
+}) => {
   // console.log(item);
-
-  const classes = useStyles();
 
   return (
     <Card>
       <CardMedia
-        className={classes.media}
+        component="img"
+        sx={styles.media}
         image={item.image.url}
-        alt="item.name"
+        alt={item.name}
       />
-      <CardContent className={classes.CardContent}>
+      <CardContent sx={styles.cardContent}>
         <Typography variant="h4">{item.name}</Typography>
         <Typography variant="h5">
           {item.line_total.formatted_with_symbol}
         </Typography>
       </CardContent>
 
-      <CardActions className={classes.CardActions}>
-        <div className={classes.buttons}>
+      <CardActions sx={styles.cartActions}>
+        <Box sx={styles.buttons}>
           <Button
             type="button"
             size="small"
@@ -46,7 +53,7 @@ const CartItem = ({ item, onUpdateCartQty, onRemoveFromCart }) => {
           >
             &#43;
           </Button>
-        </div>
+        </Box>
         <Button
           variant="contained"
           type="button"

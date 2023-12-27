@@ -5,7 +5,7 @@ import {
   Button,
   Grid,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import FormInput from "./FormInput";
