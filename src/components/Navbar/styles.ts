@@ -1,7 +1,6 @@
-import { useTheme } from "@mui/material";
+import { createThemedStyles } from "@/lib/functions";
 import { alpha } from "@mui/material";
 import { CSSProperties } from "react";
-const theme = useTheme();
 
 const drawerWidth = 0;
 
@@ -22,6 +21,7 @@ type Styles = {
     textDecoration: string;
   };
   image: {
+    objectFit: string;
     marginRight: string;
   };
   menuButton: {
@@ -68,7 +68,7 @@ type Styles = {
   };
 };
 
-const styles: Styles = {
+const stylesCreator = (theme: any): Styles => ({
   appBar: {
     boxShadow: "none",
     borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
@@ -84,6 +84,7 @@ const styles: Styles = {
     textDecoration: "none",
   },
   image: {
+    objectFit: "contain",
     marginRight: "10px",
   },
   menuButton: {
@@ -134,6 +135,6 @@ const styles: Styles = {
       width: "20ch",
     },
   },
-};
+});
 
-export default styles;
+export default createThemedStyles(stylesCreator);

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Container, Typography, Button, Grid, Box } from "@mui/material";
 import CartItem from "./CartItem/CartItem";
 import Link from "@mui/material/Link";
+import { useTheme } from "@mui/material/styles";
 import styles from "./styles";
 
 const Cart = ({
@@ -16,11 +17,13 @@ const Cart = ({
   handleRemoveFromCart: any;
   handleEmptyCart: any;
 }) => {
+  const theme = useTheme();
+  const classes = styles(theme);
   const navigate = useNavigate();
   const EmptyCart = () => (
     <Typography variant="subtitle1">
       Your cart is currently empty.<br></br>
-      <Link href="/" sx={styles.link}>
+      <Link href="/" sx={classes.link}>
         Return to shop
       </Link>
     </Typography>
@@ -39,13 +42,13 @@ const Cart = ({
           </Grid>
         ))}
       </Grid>
-      <Box sx={styles.cardDetails}>
+      <Box sx={classes.cardDetails}>
         <Typography variant="h4">
           Subtotal: {cart.subtotal.formatted_with_symbol}
         </Typography>
         <div>
           <Button
-            sx={styles.emptyButton}
+            sx={classes.emptyButton}
             size="large"
             type="button"
             variant="contained"
@@ -55,7 +58,7 @@ const Cart = ({
             Empty Cart
           </Button>
           <Button
-            sx={styles.checkoutButton}
+            sx={classes.checkoutButton}
             size="large"
             type="button"
             variant="contained"
@@ -73,8 +76,8 @@ const Cart = ({
 
   return (
     <Container>
-      <Box sx={styles.toolbar} />
-      <Typography sx={styles.title} variant="h3">
+      <Box sx={classes.toolbar} />
+      <Typography sx={classes.title} variant="h3">
         Shopping Cart
       </Typography>
       {!cart.line_items.length ? <EmptyCart /> : <FilledCart />}

@@ -1,6 +1,5 @@
-import { useTheme } from "@mui/material";
 import { CSSProperties } from "react";
-const theme = useTheme();
+import { createThemedStyles } from "@/lib/functions";
 
 type Breakpoint = {
   width: number;
@@ -46,7 +45,7 @@ type Styles = {
   };
 };
 
-const styles: Styles = {
+const stylesCreator = (theme: any): Styles => ({
   appBar: {
     position: "relative",
   },
@@ -95,6 +94,6 @@ const styles: Styles = {
     justifyContent: "center",
     alignItems: "center",
   },
-};
+});
 
-export default styles;
+export default createThemedStyles(stylesCreator);

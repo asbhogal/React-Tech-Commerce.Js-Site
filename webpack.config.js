@@ -80,6 +80,9 @@ module.exports = {
 
   resolve: {
     extensions: [".js", ".jsx", ".tsx", ".ts"],
+    alias: {
+      "@": path.resolve(__dirname, "src/"),
+    },
   },
 
   devtool: "source-map",

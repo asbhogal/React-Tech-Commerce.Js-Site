@@ -1,6 +1,5 @@
-import { useTheme } from "@mui/material";
+import { createThemedStyles } from "@/lib/functions";
 import { CSSProperties } from "react";
-const theme = useTheme();
 
 type Breakpoint = {
   [key: string]: string;
@@ -29,7 +28,7 @@ type Styles = {
   };
 };
 
-const styles: Styles = {
+const stylesCreator = (theme: any): Styles => ({
   toolbar: theme.mixins.toolbar,
   title: {
     marginTop: "5%",
@@ -55,6 +54,6 @@ const styles: Styles = {
     width: "100%",
     justifyContent: "space-between",
   },
-};
+});
 
-export default styles;
+export default createThemedStyles(stylesCreator);

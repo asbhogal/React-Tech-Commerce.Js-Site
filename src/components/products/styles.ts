@@ -1,6 +1,5 @@
-import { useTheme } from "@mui/material";
+import { createThemedStyles } from "@/lib/functions";
 import { CSSProperties } from "react";
-const theme = useTheme();
 
 type Styles = {
   toolbar: CSSProperties;
@@ -14,7 +13,7 @@ type Styles = {
   };
 };
 
-const styles: Styles = {
+const stylesCreator = (theme: any): Styles => ({
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
@@ -24,6 +23,6 @@ const styles: Styles = {
   root: {
     flexGrow: 1,
   },
-};
+});
 
-export default styles;
+export default createThemedStyles(stylesCreator);

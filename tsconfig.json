@@ -16,9 +16,9 @@
     "isolatedModules": true,
     "incremental": true,
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", ".lib/types/**/*.ts"],
+  "include": ["custom.d.ts", "**/*.ts", "**/*.tsx", ".lib/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

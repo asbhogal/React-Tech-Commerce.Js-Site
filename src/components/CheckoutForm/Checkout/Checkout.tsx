@@ -12,6 +12,7 @@ import {
   Typography,
   Box,
   Container,
+  useTheme,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import AddressForm from "../AddressForm";
@@ -37,6 +38,8 @@ const Checkout = ({
   const [isFinished, setIsFinished] = useState(false);
 
   const Navigate = useNavigate();
+  const theme = useTheme();
+  const classes = styles(theme);
 
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
   const prevStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -72,7 +75,7 @@ const Checkout = ({
             {order.customer.lastname}. You will receive a confirmation email
             shortly.
           </Typography>
-          <Divider sx={styles.divider} />
+          <Divider sx={classes.divider} />
           <Typography variant="subtitle2">
             Order ref: {order.customer_reference}
           </Typography>
@@ -89,7 +92,7 @@ const Checkout = ({
             Thank you for your purchase. You will receive a confirmation email
             shortly.
           </Typography>
-          <Divider sx={styles.divider} />
+          <Divider sx={classes.divider} />
         </div>
         <br />
         <Button component={Link} to="/" variant="outlined" type="button">
@@ -97,7 +100,7 @@ const Checkout = ({
         </Button>
       </>
     ) : (
-      <Box sx={styles.spinner}>
+      <Box sx={classes.spinner}>
         <CircularProgress />
       </Box>
     );
@@ -135,13 +138,13 @@ const Checkout = ({
   return (
     <>
       <CssBaseline />
-      <Box sx={styles.toolbar}></Box>
-      <Container sx={styles.layout}>
-        <Paper sx={styles.paper}>
+      <Box sx={classes.toolbar}></Box>
+      <Container sx={classes.layout}>
+        <Paper sx={classes.paper}>
           <Typography variant="h4" align="center">
             Checkout
           </Typography>
-          <Stepper activeStep={activeStep} sx={styles.stepper}>
+          <Stepper activeStep={activeStep} sx={classes.stepper}>
             {steps.map((step) => (
               <Step key={step}>
                 <StepLabel>{step}</StepLabel>
