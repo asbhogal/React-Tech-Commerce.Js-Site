@@ -1,13 +1,14 @@
+import React from "react";
 import { Typography, List, ListItem, ListItemText } from "@mui/material";
 
-const Review = ({ checkoutToken }) => {
+const Review = ({ checkoutToken }: { checkoutToken: any }) => {
   return (
     <>
       <Typography variant="h6" gutterBottom>
         Order Summary
       </Typography>
       <List disablePadding>
-        {checkoutToken.line_items.map((product) => (
+        {checkoutToken.line_items.map((product: any) => (
           <ListItem style={{ padding: "10px 0" }} key={product.name}>
             <ListItemText
               primary={product.name}

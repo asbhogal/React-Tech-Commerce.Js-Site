@@ -1,7 +1,8 @@
+import React from "react";
 import { TextField, Grid } from "@mui/material";
 import { useFormContext, Controller } from "react-hook-form";
 
-const FormInput = ({ name, label }) => {
+const FormInput = ({ name, label }: { name: any; label: any }) => {
   const { control } = useFormContext();
 
   return (

@@ -1,5 +1,5 @@
+import React from "react";
 import { Typography, Button, Divider } from "@mui/material";
-
 import {
   Elements,
   CardElement,
@@ -9,7 +9,13 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 import Review from "./Review";
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
+const stripeKey = process.env.REACT_APP_STRIPE_PUBLIC_KEY;
+
+if (!stripeKey) {
+  throw new Error("Stripe key is not defined");
+}
+
+const stripePromise = loadStripe(stripeKey);
 
 const PaymentForm = ({
   checkoutToken,
@@ -18,10 +24,17 @@ const PaymentForm = ({
   onCaptureCheckout,
   nextStep,
   timeout,
+}: {
+  checkoutToken: any;
+  shippingData: any;
+  prevStep: any;
+  onCaptureCheckout: any;
+  nextStep: any;
+  timeout: any;
 }) => {
   console.log(shippingData);
 
-  const handleSubmit = async (event, elements, stripe) => {
+  const handleSubmit = async (event: any, elements: any, stripe: any) => {
     event.preventDefault();
 
     if (!stripe || !elements) return;

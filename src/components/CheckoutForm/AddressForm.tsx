@@ -1,3 +1,4 @@
+import React from "react";
 import {
   InputLabel,
   Select,
@@ -12,14 +13,28 @@ import FormInput from "./FormInput";
 import { commerce } from "../../lib/commerce";
 import { Link } from "react-router-dom";
 
-const AddressForm = ({ checkoutToken, next }) => {
+type ShippingOption = {
+  id: string;
+  description: string;
+  price: {
+    formatted_with_symbol: string;
+  };
+};
+
+const AddressForm = ({
+  checkoutToken,
+  next,
+}: {
+  checkoutToken: any;
+  next: any;
+}) => {
   const methods = useForm();
 
   const [shippingCountries, setShippingCountries] = useState([]);
   const [shippingCountry, setShippingCountry] = useState("");
   const [shippingRegions, setShippingRegions] = useState([]);
   const [shippingRegion, setShippingRegion] = useState("");
-  const [shippingOptions, setShippingOptions] = useState([]);
+  const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([]);
   const [shippingOption, setShippingOption] = useState("");
 
   const countries = Object.entries(shippingCountries).map(([code, name]) => ({
@@ -35,7 +50,7 @@ const AddressForm = ({ checkoutToken, next }) => {
     label: `${sO.description} - (${sO.price.formatted_with_symbol})`,
   }));
 
-  const fetchShippingCountries = async (checkoutTokenID) => {
+  const fetchShippingCountries = async (checkoutTokenID: any) => {
     const { countries } = await commerce.services.localeListShippingCountries(
       checkoutTokenID
     );
@@ -45,7 +60,7 @@ const AddressForm = ({ checkoutToken, next }) => {
     setShippingCountry(Object.keys(countries)[0]);
   };
 
-  const fetchCountryRegions = async (countryCode) => {
+  const fetchCountryRegions = async (countryCode: any) => {
     const { subdivisions } = await commerce.services.localeListSubdivisions(
       countryCode
     );
@@ -56,9 +71,9 @@ const AddressForm = ({ checkoutToken, next }) => {
   };
 
   const fetchShippingOptions = async (
-    checkoutTokenID,
-    country,
-    region = null
+    checkoutTokenID: any,
+    country: any,
+    region: string | null = null
   ) => {
     const options = await commerce.checkout.getShippingOptions(
       checkoutTokenID,
