@@ -28,7 +28,18 @@ const AddressForm = ({
   checkoutToken: any;
   next: any;
 }) => {
-  const methods = useForm();
+  const methods = useForm({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      propertyNumber: "",
+      addressLine1: "",
+      town: "",
+      ZipPostCode: "",
+      emailAddress: "",
+      cellNumber: "",
+    },
+  });
 
   const [shippingCountries, setShippingCountries] = useState([]);
   const [shippingCountry, setShippingCountry] = useState("");

@@ -7,16 +7,21 @@ import Cart from "./Cart/Cart";
 import Checkout from "./CheckoutForm/Checkout/Checkout";
 import { commerce } from "../lib/commerce";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ThemeProvider, useTheme } from "@mui/material";
+import { CircularProgress, ThemeProvider, useTheme } from "@mui/material";
+import {
+  Cart as CartInterface,
+  Product,
+  newOrder,
+} from "@/lib/types/products/types";
 
 const App = () => {
-  const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState<{ total_items?: number }>({});
+  const [products, setProducts] = useState<Product[]>([]);
+  const [cart, setCart] = useState<CartInterface | null>(null);
   const [order, setOrder] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
 
   const fetchProducts = async () => {
-    const { data } = await commerce.products.list();
+    const { data } = (await commerce.products.list()) as { data: Product[] };
 
     setProducts(data);
   };
@@ -25,20 +30,25 @@ const App = () => {
     setCart(await commerce.cart.retrieve());
   };
 
-  const handleAddToCart = async (productId: any, quantity: any) => {
-    const item = await commerce.cart.add(productId, quantity);
+  const handleAddToCart = async (productId: string, quantity: number) => {
+    const item = (await commerce.cart.add(
+      productId,
+      quantity
+    )) as CartInterface;
 
     setCart(item);
   };
 
-  const handleUpdateCartQty = async (productId: any, quantity: any) => {
-    const response = await commerce.cart.update(productId, { quantity });
+  const handleUpdateCartQty = async (productId: string, quantity: number) => {
+    const response = (await commerce.cart.update(productId, {
+      quantity,
+    })) as CartInterface;
 
     setCart(response);
   };
 
-  const handleRemoveFromCart = async (productId: any) => {
-    const response = await commerce.cart.remove(productId);
+  const handleRemoveFromCart = async (productId: string) => {
+    const response = (await commerce.cart.remove(productId)) as CartInterface;
 
     setCart(response);
   };
@@ -55,15 +65,20 @@ const App = () => {
     setCart(newCart);
   };
 
-  const handleCaptureCheckout = async (checkoutTokenID: any, newOrder: any) => {
+  const handleCaptureCheckout = async (
+    checkoutTokenID: string,
+    newOrder: newOrder
+  ) => {
+    console.log("hnandleCaptureCheckout is called");
+    console.log("checkoutTokenID", checkoutTokenID);
+    console.log("newOrder", newOrder);
     try {
       const incomingOrder = await commerce.checkout.capture(
         checkoutTokenID,
         newOrder
       );
-
+      console.log(incomingOrder);
       setOrder(incomingOrder);
-
       refreshCart();
     } catch (error: any) {
       setErrorMessage(error.data.error.message);
@@ -81,7 +96,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Navbar totalItems={cart.total_items} />
+        <Navbar totalItems={cart?.total_items} />
         <Routes>
           <Route
             path="/"
@@ -92,12 +107,16 @@ const App = () => {
           <Route
             path="/cart"
             element={
-              <Cart
-                cart={cart}
-                handleUpdateCartQty={handleUpdateCartQty}
-                handleRemoveFromCart={handleRemoveFromCart}
-                handleEmptyCart={handleEmptyCart}
-              />
+              cart ? (
+                <Cart
+                  cart={cart}
+                  handleUpdateCartQty={handleUpdateCartQty}
+                  handleRemoveFromCart={handleRemoveFromCart}
+                  handleEmptyCart={handleEmptyCart}
+                />
+              ) : (
+                <CircularProgress />
+              )
             }
           />
           <Route
