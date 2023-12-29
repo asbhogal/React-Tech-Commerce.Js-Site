@@ -63,7 +63,7 @@ const PaymentForm = ({
           name: "Primary",
           property: shippingData.propertyNumber,
           street: shippingData.addressLine1,
-          town: shippingData.town,
+          town_city: shippingData.town,
           property_code: shippingData.ZipPostCode,
           county_state: shippingData.shippingSubdivision,
           country: shippingData.shippingCountry,
