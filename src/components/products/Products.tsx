@@ -1,15 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Box, Container, Grid, useTheme } from "@mui/material";
 import Product from "./Product/Product";
 import styles from "./styles";
+import { CartContext } from "@/context/CartContext";
 
-const Products = ({
-  products,
-  onAddToCart,
-}: {
-  products: any;
-  onAddToCart: any;
-}) => {
+const Products = ({ products }: { products: any }) => {
+  const { onAddToCart } = useContext(CartContext);
   const theme = useTheme();
   const classes = styles(theme);
   return (
@@ -18,7 +14,7 @@ const Products = ({
       <Grid container justifyContent="center" spacing={4}>
         {products.map((product: any) => (
           <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
-            <Product product={product} onAddToCart={onAddToCart} />
+            <Product product={product} />
           </Grid>
         ))}
       </Grid>

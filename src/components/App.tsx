@@ -13,6 +13,7 @@ import {
   Product,
   newOrder,
 } from "@/lib/types/products/types";
+import { CartContext } from "@/context/CartContext";
 
 const App = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -94,45 +95,42 @@ const App = () => {
   const theme = useTheme();
 
   return (
-    <ThemeProvider theme={theme}>
-      <Router>
-        <Navbar totalItems={cart?.total_items} />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Products products={products} onAddToCart={handleAddToCart} />
-            }
-          />
-          <Route
-            path="/cart"
-            element={
-              cart ? (
-                <Cart
+    <CartContext.Provider value={{ products, onAddToCart: handleAddToCart }}>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Navbar totalItems={cart?.total_items} />
+          <Routes>
+            <Route path="/" element={<Products products={products} />} />
+            <Route
+              path="/cart"
+              element={
+                cart ? (
+                  <Cart
+                    cart={cart}
+                    handleUpdateCartQty={handleUpdateCartQty}
+                    handleRemoveFromCart={handleRemoveFromCart}
+                    handleEmptyCart={handleEmptyCart}
+                  />
+                ) : (
+                  <CircularProgress />
+                )
+              }
+            />
+            <Route
+              path="/checkout"
+              element={
+                <Checkout
                   cart={cart}
-                  handleUpdateCartQty={handleUpdateCartQty}
-                  handleRemoveFromCart={handleRemoveFromCart}
-                  handleEmptyCart={handleEmptyCart}
+                  order={order}
+                  onCaptureCheckout={handleCaptureCheckout}
+                  error={errorMessage}
                 />
-              ) : (
-                <CircularProgress />
-              )
-            }
-          />
-          <Route
-            path="/checkout"
-            element={
-              <Checkout
-                cart={cart}
-                order={order}
-                onCaptureCheckout={handleCaptureCheckout}
-                error={errorMessage}
-              />
-            }
-          />
-        </Routes>
-      </Router>
-    </ThemeProvider>
+              }
+            />
+          </Routes>
+        </Router>
+      </ThemeProvider>
+    </CartContext.Provider>
   );
 };
 
