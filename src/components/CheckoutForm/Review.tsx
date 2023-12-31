@@ -1,7 +1,8 @@
 import React from "react";
 import { Typography, List, ListItem, ListItemText } from "@mui/material";
+import { CheckoutToken } from "@/lib/types/payment/types";
 
-const Review = ({ checkoutToken }: { checkoutToken: any }) => {
+const Review = ({ checkoutToken }: { checkoutToken: CheckoutToken }) => {
   return (
     <>
       <Typography variant="h6" gutterBottom>
