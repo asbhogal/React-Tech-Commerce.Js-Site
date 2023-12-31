@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   Card,
   CardMedia,
@@ -11,10 +11,10 @@ import {
 import { AddShoppingCart } from "@mui/icons-material";
 import DOMPurify from "dompurify";
 import styles from "./styles";
-import { CartContext } from "@/context/CartContext";
+import { useCartContext } from "@/hooks/useCartContext";
 
 const Product = ({ product }: { product: any }) => {
-  const { onAddToCart } = useContext(CartContext);
+  const { onAddToCart } = useCartContext();
   const data = product.description;
 
   const sanitizedData = () => ({

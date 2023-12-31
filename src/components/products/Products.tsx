@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
-import { Box, Container, Grid, useTheme } from "@mui/material";
+import React from "react";
+import { Box, Grid, useTheme } from "@mui/material";
 import Product from "./Product/Product";
 import styles from "./styles";
-import { CartContext } from "@/context/CartContext";
+import { useCartContext } from "@/hooks/useCartContext";
 
-const Products = ({ products }: { products: any }) => {
-  const { onAddToCart } = useContext(CartContext);
+const Products = () => {
+  const { products } = useCartContext();
   const theme = useTheme();
   const classes = styles(theme);
   return (
