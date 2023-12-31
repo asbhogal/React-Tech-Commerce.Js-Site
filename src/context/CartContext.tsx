@@ -6,10 +6,7 @@ import {
   Product,
   newOrder,
 } from "@/lib/types/products/types";
-
-type CartContextProviderType = {
-  children: React.ReactNode;
-};
+import { CartContextProviderType } from "@/lib/types/context/types";
 
 export default function CartContextProvider({
   children,
