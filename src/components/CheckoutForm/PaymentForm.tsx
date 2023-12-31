@@ -6,7 +6,7 @@ import {
   ElementsConsumer,
 } from "@stripe/react-stripe-js";
 
-import { loadStripe } from "@stripe/stripe-js";
+import { Stripe, StripeElements, loadStripe } from "@stripe/stripe-js";
 import Review from "./Review";
 import { CheckoutToken } from "@/lib/types/payment/types";
 import { ShippingData } from "@/lib/types/shipping/types";
@@ -34,19 +34,21 @@ const PaymentForm = ({
   nextStep: () => void;
   timeout: () => void;
 }) => {
-  console.log("checkout token", checkoutToken);
-  console.log("shippingData", shippingData);
-  console.log("prevStep", prevStep);
-  console.log("onCaptureCheckout", onCaptureCheckout);
-  console.log("nextStep", nextStep);
-  console.log("timeout", timeout);
-
-  const handleSubmit = async (event: any, elements: any, stripe: any) => {
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>,
+    elements: StripeElements | null,
+    stripe: Stripe | null
+  ) => {
     event.preventDefault();
 
     if (!stripe || !elements) return;
 
     const cardElement = elements.getElement(CardElement);
+
+    if (!cardElement) {
+      console.log("Card Element not found");
+      return;
+    }
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
