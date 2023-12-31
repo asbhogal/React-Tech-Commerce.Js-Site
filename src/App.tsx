@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider, useTheme } from "@mui/material";
 
 import CartContextProvider from "@/context/CartContext";
-import AppRoutes from "./AppRoutes";
+import AppRoutes from "./components/AppRoutes";
 
 const App = () => {
   const theme = useTheme();
