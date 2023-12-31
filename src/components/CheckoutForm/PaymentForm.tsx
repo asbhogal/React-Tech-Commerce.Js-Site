@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Button, Divider } from "@mui/material";
+import { Typography, Button, Divider, CircularProgress } from "@mui/material";
 import {
   Elements,
   CardElement,
@@ -27,8 +27,8 @@ const PaymentForm = ({
   nextStep,
   timeout,
 }: {
-  checkoutToken: CheckoutToken;
-  shippingData: ShippingData;
+  checkoutToken?: CheckoutToken;
+  shippingData: Partial<ShippingData>;
   prevStep: () => void;
   onCaptureCheckout: (arg1: string, arg2: object) => void;
   nextStep: () => void;
@@ -59,7 +59,7 @@ const PaymentForm = ({
       console.log(error);
     } else {
       const orderData = {
-        line_items: checkoutToken.line_items,
+        line_items: checkoutToken?.line_items,
 
         customer: {
           firstname: shippingData.firstName,
@@ -91,7 +91,11 @@ const PaymentForm = ({
         },
       };
 
-      onCaptureCheckout(checkoutToken.id, orderData);
+      checkoutToken ? (
+        onCaptureCheckout(checkoutToken.id, orderData)
+      ) : (
+        <CircularProgress />
+      );
 
       timeout();
 
@@ -122,7 +126,7 @@ const PaymentForm = ({
                   color="primary"
                   disabled={!stripe}
                 >
-                  Pay {checkoutToken.subtotal.formatted_with_symbol}
+                  Pay {checkoutToken?.subtotal.formatted_with_symbol}
                 </Button>
               </div>
             </form>

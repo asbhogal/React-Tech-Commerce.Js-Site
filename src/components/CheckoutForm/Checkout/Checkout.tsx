@@ -18,6 +18,8 @@ import { Link, useNavigate } from "react-router-dom";
 import AddressForm from "../AddressForm";
 import PaymentForm from "../PaymentForm";
 import styles from "./styles";
+import { CheckoutToken } from "@/lib/types/payment/types";
+import { ShippingData } from "@/lib/types/shipping/types";
 
 const steps = ["Shipping address", "Payment details"];
 
@@ -33,8 +35,10 @@ const Checkout = ({
   error: any;
 }) => {
   const [activeStep, setActiveStep] = useState(0);
-  const [checkoutToken, setCheckoutToken] = useState(null);
-  const [shippingData, setShippingData] = useState({});
+  const [checkoutToken, setCheckoutToken] = useState<CheckoutToken | undefined>(
+    undefined
+  );
+  const [shippingData, setShippingData] = useState<Partial<ShippingData>>({});
   const [isFinished, setIsFinished] = useState(false);
 
   const Navigate = useNavigate();

@@ -169,20 +169,6 @@ export interface Shipping {
   town: string;
 }
 
-export interface ShippingData {
-  ZipPostCode: string;
-  addressLine1: string;
-  cellNumber: string;
-  emailAddress: string;
-  firstName: string;
-  lastName: string;
-  propertyNumber: string;
-  shippingCountry: string;
-  shippingOption: string;
-  shippingRegion: string;
-  town: string;
-}
-
 export interface LineItems {
   id: string;
   image: Image;
