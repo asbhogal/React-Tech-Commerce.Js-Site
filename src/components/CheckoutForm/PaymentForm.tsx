@@ -10,6 +10,7 @@ import { Stripe, StripeElements, loadStripe } from "@stripe/stripe-js";
 import Review from "./Review";
 import { CheckoutToken } from "@/lib/types/payment/types";
 import { ShippingData } from "@/lib/types/shipping/types";
+import { z } from "zod";
 
 const stripeKey = process.env.REACT_APP_STRIPE_PUBLIC_KEY;
 
@@ -18,6 +19,21 @@ if (!stripeKey) {
 }
 
 const stripePromise = loadStripe(stripeKey);
+
+const ShippingDataSchema = z.object({
+  firstName: z.string(),
+  lastName: z.string(),
+  propertyNumber: z.string(),
+  addressLine1: z.string(),
+  town: z.string(),
+  ZipPostCode: z.string().min(5, "Your postal code is incomplete"),
+  emailAddress: z.string().email(),
+  cellNumber: z.string(),
+  shippingCountry: z.string(),
+  shippingRegion: z.string(),
+  shippingOption: z.string(),
+  shippingSubdivision: z.string(),
+});
 
 const PaymentForm = ({
   checkoutToken,
@@ -50,55 +66,59 @@ const PaymentForm = ({
       return;
     }
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card: cardElement,
     });
 
-    if (error) {
-      console.log(error);
-    } else {
-      const orderData = {
-        line_items: checkoutToken?.line_items,
+    if (!paymentMethod) {
+      console.log("Payment method creation failed");
+      return;
+    }
 
-        customer: {
-          firstname: shippingData.firstName,
-          lastname: shippingData.lastName,
-          email: shippingData.emailAddress,
-          cell_number: shippingData.cellNumber,
+    const validatedShippingData = ShippingDataSchema.safeParse(shippingData);
+
+    if (!validatedShippingData.success) {
+      console.error(validatedShippingData.error);
+      return;
+    }
+
+    const orderData = {
+      line_items: checkoutToken?.line_items,
+
+      customer: {
+        firstname: shippingData.firstName,
+        lastname: shippingData.lastName,
+        email: shippingData.emailAddress,
+        cell_number: shippingData.cellNumber,
+      },
+
+      shipping: {
+        name: "Primary",
+        property: shippingData.propertyNumber,
+        street: shippingData.addressLine1,
+        town_city: shippingData.town,
+        property_code: shippingData.ZipPostCode,
+        county_state: shippingData.shippingSubdivision,
+        country: shippingData.shippingCountry,
+      },
+
+      fulfillment: {
+        shipping_method: shippingData.shippingOption,
+      },
+
+      payment: {
+        gateway: "stripe",
+
+        stripe: {
+          payment_method_id: paymentMethod.id,
         },
+      },
+    };
 
-        shipping: {
-          name: "Primary",
-          property: shippingData.propertyNumber,
-          street: shippingData.addressLine1,
-          town_city: shippingData.town,
-          property_code: shippingData.ZipPostCode,
-          county_state: shippingData.shippingSubdivision,
-          country: shippingData.shippingCountry,
-        },
-
-        fulfillment: {
-          shipping_method: shippingData.shippingOption,
-        },
-
-        payment: {
-          gateway: "stripe",
-
-          stripe: {
-            payment_method_id: paymentMethod.id,
-          },
-        },
-      };
-
-      checkoutToken ? (
-        onCaptureCheckout(checkoutToken.id, orderData)
-      ) : (
-        <CircularProgress />
-      );
-
+    if (checkoutToken) {
+      onCaptureCheckout(checkoutToken.id, orderData);
       timeout();
-
       nextStep();
     }
   };
