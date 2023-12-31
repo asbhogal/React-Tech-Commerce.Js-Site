@@ -41,12 +41,16 @@ const AppRoutes = () => {
         <Route
           path="/checkout"
           element={
-            <Checkout
-              cart={cart}
-              order={order}
-              onCaptureCheckout={handleCaptureCheckout}
-              error={errorMessage}
-            />
+            cart ? (
+              <Checkout
+                cart={cart}
+                order={order}
+                onCaptureCheckout={handleCaptureCheckout}
+                error={errorMessage}
+              />
+            ) : (
+              <CircularProgress />
+            )
           }
         />
       </Routes>

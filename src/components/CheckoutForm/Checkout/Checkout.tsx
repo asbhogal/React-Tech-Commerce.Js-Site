@@ -20,6 +20,7 @@ import PaymentForm from "../PaymentForm";
 import styles from "./styles";
 import { CheckoutToken } from "@/lib/types/payment/types";
 import { ShippingData } from "@/lib/types/shipping/types";
+import { Cart } from "@/lib/types/products/types";
 
 const steps = ["Shipping address", "Payment details"];
 
@@ -29,11 +30,16 @@ const Checkout = ({
   onCaptureCheckout,
   error,
 }: {
-  cart: any;
+  cart: Cart;
   order: any;
   onCaptureCheckout: any;
   error: any;
 }) => {
+  console.log("Cart", cart);
+  console.log("Order", order);
+  console.log("OnCaptureCheckout", onCaptureCheckout);
+  console.log("error", error);
+
   const [activeStep, setActiveStep] = useState(0);
   const [checkoutToken, setCheckoutToken] = useState<CheckoutToken | undefined>(
     undefined
