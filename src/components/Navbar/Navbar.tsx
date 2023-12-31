@@ -14,7 +14,7 @@ import { Link, useLocation } from "react-router-dom";
 import styles from "./styles";
 import siteLogo from "@/assets/logos/Soeb-USB-symbol.svg";
 
-const Navbar = ({ totalItems }: { totalItems: any }) => {
+const Navbar = ({ totalItems }: { totalItems?: number }) => {
   const theme = useTheme();
   const classes = styles(theme);
   const location = useLocation();
