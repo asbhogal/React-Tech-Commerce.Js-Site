@@ -15,6 +15,9 @@ const path = require("path"),
       "process.env.REACT_APP_CHEC_PUBLIC_KEY": JSON.stringify(
         process.env.REACT_APP_CHEC_PUBLIC_KEY
       ),
+      "process.env.REACT_APP_STRIPE_PUBLIC_KEY": JSON.stringify(
+        process.env.REACT_APP_STRIPE_PUBLIC_KEY
+      ),
     }),
     new Dotenv(),
     // new ProvidePlugin(),
