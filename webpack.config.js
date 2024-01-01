@@ -11,6 +11,11 @@ const path = require("path"),
     new webpack.ProvidePlugin({
       process: "process/browser",
     }),
+    new webpack.DefinePlugin({
+      "process.env.REACT_APP_CHEC_PUBLIC_KEY": JSON.stringify(
+        process.env.REACT_APP_CHEC_PUBLIC_KEY
+      ),
+    }),
     new Dotenv(),
     // new ProvidePlugin(),
     new CleanWebpackPlugin(),
