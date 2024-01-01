@@ -20,7 +20,8 @@ import PaymentForm from "../PaymentForm";
 import styles from "./styles";
 import { CheckoutToken } from "@/lib/types/payment/types";
 import { ShippingData } from "@/lib/types/shipping/types";
-import { Cart } from "@/lib/types/products/types";
+import { Cart, newOrder } from "@/lib/types/products/types";
+import { createShippingData } from "@/lib/functions/functions";
 
 const steps = ["Shipping address", "Payment details"];
 
@@ -33,20 +34,20 @@ const Checkout = ({
 }: {
   cart: Cart;
   order: any;
-  onCaptureCheckout: any;
+  onCaptureCheckout: (checkoutTokenID: string, newOrder: newOrder) => void;
   error: string;
-  handleEmptyCart: any;
+  handleEmptyCart: () => void;
 }) => {
-  /*  console.log("Cart", cart);
   console.log("Order", order);
   console.log("OnCaptureCheckout", onCaptureCheckout);
-  console.log("error", error); */
+  console.log("handleEmptyCart", handleEmptyCart);
 
   const [activeStep, setActiveStep] = useState(0);
   const [checkoutToken, setCheckoutToken] = useState<CheckoutToken | undefined>(
     undefined
   );
-  const [shippingData, setShippingData] = useState<Partial<ShippingData>>({});
+  const [shippingData, setShippingData] =
+    useState<ShippingData>(createShippingData);
   const [isFinished, setIsFinished] = useState(false);
 
   const Navigate = useNavigate();
@@ -80,10 +81,7 @@ const Checkout = ({
 
   const next = (data: ShippingData) => {
     setShippingData(data);
-
     nextStep();
-
-    console.log(data);
   };
 
   let Confirmation = () =>

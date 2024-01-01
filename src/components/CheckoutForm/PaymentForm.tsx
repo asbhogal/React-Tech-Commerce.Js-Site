@@ -10,6 +10,7 @@ import { Stripe, StripeElements, loadStripe } from "@stripe/stripe-js";
 import Review from "./Review";
 import { CheckoutToken } from "@/lib/types/payment/types";
 import { ShippingData } from "@/lib/types/shipping/types";
+import { LineItems, newOrder } from "@/lib/types/products/types";
 import { z } from "zod";
 
 const stripeKey = process.env.REACT_APP_STRIPE_PUBLIC_KEY;
@@ -44,9 +45,9 @@ const PaymentForm = ({
   timeout,
 }: {
   checkoutToken?: CheckoutToken;
-  shippingData: Partial<ShippingData>;
+  shippingData: ShippingData;
   prevStep: () => void;
-  onCaptureCheckout: (arg1: string, arg2: object) => void;
+  onCaptureCheckout: (checkoutTokenID: string, newOrder: newOrder) => void;
   nextStep: () => void;
   timeout: () => void;
 }) => {
@@ -83,8 +84,19 @@ const PaymentForm = ({
       return;
     } */
 
+    const lineItems: LineItems[] = checkoutToken!.line_items.map((item) => ({
+      ...item,
+      sku: null,
+      tax: {
+        amount: null,
+        breakdown: null,
+        is_taxable: false,
+        taxable_amount: null,
+      },
+    }));
+
     const orderData = {
-      line_items: checkoutToken?.line_items,
+      line_items: lineItems,
       customer: {
         firstname: shippingData.firstName,
         lastname: shippingData.lastName,
@@ -95,7 +107,7 @@ const PaymentForm = ({
         name: "Primary",
         property: shippingData.propertyNumber,
         street: shippingData.addressLine1,
-        town_city: shippingData.town,
+        town: shippingData.town,
         property_code: shippingData.ZipPostCode,
         county_state: shippingData.shippingSubdivision,
         country: shippingData.shippingCountry,

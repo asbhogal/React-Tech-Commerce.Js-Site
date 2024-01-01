@@ -162,7 +162,7 @@ export interface Customer {
 export interface Shipping {
   country: string;
   county_state: string;
-  name: "Primary";
+  name: string;
   property: string;
   property_code: string;
   street: string;
