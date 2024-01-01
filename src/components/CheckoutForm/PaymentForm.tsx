@@ -20,7 +20,7 @@ if (!stripeKey) {
 
 const stripePromise = loadStripe(stripeKey);
 
-const ShippingDataSchema = z.object({
+/* const ShippingDataSchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
   propertyNumber: z.string(),
@@ -33,7 +33,7 @@ const ShippingDataSchema = z.object({
   shippingRegion: z.string(),
   shippingOption: z.string(),
   shippingSubdivision: z.string(),
-});
+}); */
 
 const PaymentForm = ({
   checkoutToken,
@@ -76,23 +76,21 @@ const PaymentForm = ({
       return;
     }
 
-    const validatedShippingData = ShippingDataSchema.safeParse(shippingData);
+    /*  const validatedShippingData = ShippingDataSchema.safeParse(shippingData);
 
     if (!validatedShippingData.success) {
       console.error(validatedShippingData.error);
       return;
-    }
+    } */
 
     const orderData = {
       line_items: checkoutToken?.line_items,
-
       customer: {
         firstname: shippingData.firstName,
         lastname: shippingData.lastName,
         email: shippingData.emailAddress,
         cell_number: shippingData.cellNumber,
       },
-
       shipping: {
         name: "Primary",
         property: shippingData.propertyNumber,
@@ -102,11 +100,9 @@ const PaymentForm = ({
         county_state: shippingData.shippingSubdivision,
         country: shippingData.shippingCountry,
       },
-
       fulfillment: {
         shipping_method: shippingData.shippingOption,
       },
-
       payment: {
         gateway: "stripe",
 

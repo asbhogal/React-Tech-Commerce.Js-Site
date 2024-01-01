@@ -13,6 +13,8 @@ import FormInput from "./FormInput";
 import { commerce } from "../../lib/commerce";
 import { Link } from "react-router-dom";
 import { z } from "zod";
+import { CheckoutToken } from "@/lib/types/payment/types";
+import { ShippingData } from "@/lib/types/shipping/types";
 
 type ShippingOption = {
   id: string;
@@ -63,8 +65,8 @@ const AddressForm = ({
   checkoutToken,
   next,
 }: {
-  checkoutToken: any;
-  next: any;
+  checkoutToken?: CheckoutToken;
+  next: (data: ShippingData) => void;
 }) => {
   const methods = useForm({
     defaultValues: {
@@ -101,7 +103,9 @@ const AddressForm = ({
     label: `${sO.description} - (${sO.price.formatted_with_symbol})`,
   }));
 
-  const fetchShippingCountries = async (checkoutTokenID: any) => {
+  const fetchShippingCountries = async (
+    checkoutTokenID: string | undefined
+  ) => {
     const { countries } = await commerce.services.localeListShippingCountries(
       checkoutTokenID
     );
@@ -111,33 +115,29 @@ const AddressForm = ({
     setShippingCountry(Object.keys(countries)[0]);
   };
 
-  const fetchCountryRegions = async (countryCode: any) => {
+  const fetchCountryRegions = async (countryCode: string) => {
     const { subdivisions } = await commerce.services.localeListSubdivisions(
       countryCode
     );
-
     setShippingRegions(subdivisions);
-
     setShippingRegion(Object.keys(subdivisions)[0]);
   };
 
   const fetchShippingOptions = async (
-    checkoutTokenID: any,
-    country: any,
+    checkoutTokenID: string | undefined,
+    country: string,
     region: string | null = null
   ) => {
     const options = await commerce.checkout.getShippingOptions(
       checkoutTokenID,
       { country, region }
     );
-
     setShippingOption(options[0].id);
-
     setShippingOptions(options);
   };
 
   useEffect(() => {
-    fetchShippingCountries(checkoutToken.id);
+    fetchShippingCountries(checkoutToken?.id);
   }, []);
 
   useEffect(() => {
@@ -146,7 +146,7 @@ const AddressForm = ({
 
   useEffect(() => {
     if (shippingRegion)
-      fetchShippingOptions(checkoutToken.id, shippingCountry, shippingRegion);
+      fetchShippingOptions(checkoutToken?.id, shippingCountry, shippingRegion);
   }, [shippingRegion]);
 
   return (
@@ -163,7 +163,13 @@ const AddressForm = ({
               console.error(validatedAddressData.error);
               return;
             } */
-            next({ ...data, shippingCountry, shippingRegion, shippingOption });
+            next({
+              ...data,
+              shippingCountry,
+              shippingSubdivision: shippingRegion,
+              shippingRegion,
+              shippingOption,
+            });
           })}
         >
           <Grid container spacing={3}>

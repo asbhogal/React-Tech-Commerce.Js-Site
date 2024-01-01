@@ -29,16 +29,18 @@ const Checkout = ({
   order,
   onCaptureCheckout,
   error,
+  handleEmptyCart,
 }: {
   cart: Cart;
   order: any;
   onCaptureCheckout: any;
-  error: any;
+  error: string;
+  handleEmptyCart: any;
 }) => {
-  console.log("Cart", cart);
+  /*  console.log("Cart", cart);
   console.log("Order", order);
   console.log("OnCaptureCheckout", onCaptureCheckout);
-  console.log("error", error);
+  console.log("error", error); */
 
   const [activeStep, setActiveStep] = useState(0);
   const [checkoutToken, setCheckoutToken] = useState<CheckoutToken | undefined>(
@@ -57,23 +59,31 @@ const Checkout = ({
   useEffect(() => {
     const generateToken = async () => {
       try {
-        const token = await commerce.checkout.generateToken(cart.id, {
-          type: "cart",
-        });
-
-        setCheckoutToken(token);
+        if (cart.total_items > 0) {
+          const token = await commerce.checkout.generateToken(cart.id, {
+            type: "cart",
+          });
+          setCheckoutToken(token);
+        }
       } catch (error) {
         Navigate("/");
       }
     };
-
     generateToken();
   }, [cart]);
 
-  const next = (data: any) => {
+  useEffect(() => {
+    if (isFinished) {
+      handleEmptyCart();
+    }
+  }, [isFinished, handleEmptyCart]);
+
+  const next = (data: ShippingData) => {
     setShippingData(data);
 
     nextStep();
+
+    console.log(data);
   };
 
   let Confirmation = () =>

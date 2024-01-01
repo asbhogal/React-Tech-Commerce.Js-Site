@@ -47,6 +47,7 @@ const AppRoutes = () => {
                 order={order}
                 onCaptureCheckout={handleCaptureCheckout}
                 error={errorMessage}
+                handleEmptyCart={handleEmptyCart}
               />
             ) : (
               <CircularProgress />
