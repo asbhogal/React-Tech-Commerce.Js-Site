@@ -1,4 +1,4 @@
-import { createThemedStyles } from "@/lib/functions";
+import { createThemedStyles } from "@/lib/functions/styles";
 import { alpha } from "@mui/material";
 import { CSSProperties } from "react";
 

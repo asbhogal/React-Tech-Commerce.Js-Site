@@ -1,4 +1,4 @@
-import { createThemedStyles } from "@/lib/functions";
+import { createThemedStyles } from "@/lib/functions/styles";
 import { CSSProperties } from "react";
 
 type Breakpoint = {

@@ -1,5 +1,5 @@
 import { CSSProperties } from "react";
-import { createThemedStyles } from "@/lib/functions";
+import { createThemedStyles } from "@/lib/functions/styles";
 
 type Breakpoint = {
   width: number;
