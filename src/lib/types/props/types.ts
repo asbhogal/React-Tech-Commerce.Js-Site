@@ -9,15 +9,15 @@ export interface AddressFormPropTypes {
 
 export interface CartItemPropTypes {
   item: any;
-  onUpdateCartQty: any;
-  onRemoveFromCart: any;
+  onUpdateCartQty: (id: string, quantity: number) => void;
+  onRemoveFromCart: (id: string) => void;
 }
 
 export interface CartPropTypes {
-  cart: any;
+  cart: Cart;
   handleUpdateCartQty: any;
   handleRemoveFromCart: any;
-  handleEmptyCart: any;
+  handleEmptyCart: () => void;
 }
 
 export interface CheckoutPropTypes {
