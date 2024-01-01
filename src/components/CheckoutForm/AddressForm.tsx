@@ -12,6 +12,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import FormInput from "./FormInput";
 import { commerce } from "../../lib/commerce";
 import { Link } from "react-router-dom";
+import { z } from "zod";
 
 type ShippingOption = {
   id: string;
@@ -20,6 +21,43 @@ type ShippingOption = {
     formatted_with_symbol: string;
   };
 };
+
+/* const AddressFormSchema = z.object({
+  firstName: z.string({
+    required_error: "First name is required",
+    invalid_type_error: "Please enter a valid first name",
+  }),
+  lastName: z.string({
+    required_error: "Last name is required",
+    invalid_type_error: "Please enter a valid last name",
+  }),
+  propertyNumber: z.string({
+    required_error: "A flat/house number is required",
+    invalid_type_error: "Please enter a flat/house number",
+  }),
+  addressLine1: z.string({
+    required_error: "An address line is required",
+    invalid_type_error: "Please enter a valid address",
+  }),
+  town: z.string({
+    required_error: "Town is required",
+    invalid_type_error: "Please enter a valid town",
+  }),
+  ZipPostCode: z.string({
+    required_error: "A zip/postal code is required",
+    invalid_type_error: "Please enter a valid zip/postal code",
+  }),
+  emailAddress: z
+    .string({
+      required_error: "An email address is required",
+      invalid_type_error: "Please enter a valid email address",
+    })
+    .email(),
+  cellNumber: z.string({
+    required_error: "A cell number is required",
+    invalid_type_error: "Please enter a valid cell number",
+  }),
+}); */
 
 const AddressForm = ({
   checkoutToken,
@@ -52,10 +90,12 @@ const AddressForm = ({
     id: code,
     label: name,
   }));
+
   const subdivisions = Object.entries(shippingRegions).map(([code, name]) => ({
     id: code,
     label: name,
   }));
+
   const options = shippingOptions.map((sO) => ({
     id: sO.id,
     label: `${sO.description} - (${sO.price.formatted_with_symbol})`,
@@ -116,9 +156,15 @@ const AddressForm = ({
       </Typography>
       <FormProvider {...methods}>
         <form
-          onSubmit={methods.handleSubmit((data) =>
-            next({ ...data, shippingCountry, shippingRegion, shippingOption })
-          )}
+          onSubmit={methods.handleSubmit((data) => {
+            /* const validatedAddressData = AddressFormSchema.safeParse(data);
+
+            if (!validatedAddressData.success) {
+              console.error(validatedAddressData.error);
+              return;
+            } */
+            next({ ...data, shippingCountry, shippingRegion, shippingOption });
+          })}
         >
           <Grid container spacing={3}>
             <FormInput name="firstName" label="First Name" />
