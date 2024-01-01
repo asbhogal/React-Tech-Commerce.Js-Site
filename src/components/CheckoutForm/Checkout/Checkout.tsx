@@ -20,7 +20,7 @@ import PaymentForm from "../PaymentForm";
 import styles from "./styles";
 import { CheckoutToken } from "@/lib/types/payment/types";
 import { ShippingData } from "@/lib/types/shipping/types";
-import { createShippingData } from "@/lib/functions/functions";
+import { createShippingData } from "@/lib/functions/factory";
 import { CheckoutPropTypes } from "@/lib/types/props/types";
 
 const steps = ["Shipping address", "Payment details"];
