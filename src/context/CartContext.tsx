@@ -65,9 +65,6 @@ export default function CartContextProvider({
     checkoutTokenID: string,
     newOrder: newOrder
   ) => {
-    console.log("hnandleCaptureCheckout is called");
-    console.log("checkoutTokenID", checkoutTokenID);
-    console.log("newOrder", newOrder);
     try {
       const incomingOrder = await commerce.checkout.capture(
         checkoutTokenID,

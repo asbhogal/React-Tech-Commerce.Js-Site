@@ -5,18 +5,14 @@ import CartItem from "./CartItem/CartItem";
 import Link from "@mui/material/Link";
 import { useTheme } from "@mui/material/styles";
 import styles from "./styles";
+import { CartPropTypes } from "@/lib/types/props/types";
 
 const Cart = ({
   cart,
   handleUpdateCartQty,
   handleRemoveFromCart,
   handleEmptyCart,
-}: {
-  cart: any;
-  handleUpdateCartQty: any;
-  handleRemoveFromCart: any;
-  handleEmptyCart: any;
-}) => {
+}: CartPropTypes) => {
   const theme = useTheme();
   const classes = styles(theme);
   const navigate = useNavigate();

@@ -13,16 +13,8 @@ import FormInput from "./FormInput";
 import { commerce } from "../../lib/commerce";
 import { Link } from "react-router-dom";
 import { z } from "zod";
-import { CheckoutToken } from "@/lib/types/payment/types";
-import { ShippingData } from "@/lib/types/shipping/types";
-
-type ShippingOption = {
-  id: string;
-  description: string;
-  price: {
-    formatted_with_symbol: string;
-  };
-};
+import { ShippingOption } from "@/lib/types/shipping/types";
+import { AddressFormPropTypes } from "@/lib/types/props/types";
 
 /* const AddressFormSchema = z.object({
   firstName: z.string({
@@ -61,13 +53,7 @@ type ShippingOption = {
   }),
 }); */
 
-const AddressForm = ({
-  checkoutToken,
-  next,
-}: {
-  checkoutToken?: CheckoutToken;
-  next: (data: ShippingData) => void;
-}) => {
+const AddressForm = ({ checkoutToken, next }: AddressFormPropTypes) => {
   const methods = useForm({
     defaultValues: {
       firstName: "",

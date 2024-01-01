@@ -12,3 +12,11 @@ export interface ShippingData {
   shippingOption: string;
   shippingSubdivision: string;
 }
+
+export type ShippingOption = {
+  id: string;
+  description: string;
+  price: {
+    formatted_with_symbol: string;
+  };
+};

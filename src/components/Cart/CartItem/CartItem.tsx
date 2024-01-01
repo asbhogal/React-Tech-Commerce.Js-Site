@@ -9,18 +9,13 @@ import {
   Box,
 } from "@mui/material";
 import styles from "./styles";
+import { CartItemPropTypes } from "@/lib/types/props/types";
 
 const CartItem = ({
   item,
   onUpdateCartQty,
   onRemoveFromCart,
-}: {
-  item: any;
-  onUpdateCartQty: any;
-  onRemoveFromCart: any;
-}) => {
-  // console.log(item);
-
+}: CartItemPropTypes) => {
   return (
     <Card>
       <CardMedia

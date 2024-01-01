@@ -8,10 +8,9 @@ import {
 
 import { Stripe, StripeElements, loadStripe } from "@stripe/stripe-js";
 import Review from "./Review";
-import { CheckoutToken } from "@/lib/types/payment/types";
-import { ShippingData } from "@/lib/types/shipping/types";
-import { LineItems, newOrder } from "@/lib/types/products/types";
+import { LineItems } from "@/lib/types/products/types";
 import { z } from "zod";
+import { PaymentFormPropTypes } from "@/lib/types/props/types";
 
 const stripeKey = process.env.REACT_APP_STRIPE_PUBLIC_KEY;
 
@@ -43,14 +42,7 @@ const PaymentForm = ({
   onCaptureCheckout,
   nextStep,
   timeout,
-}: {
-  checkoutToken?: CheckoutToken;
-  shippingData: ShippingData;
-  prevStep: () => void;
-  onCaptureCheckout: (checkoutTokenID: string, newOrder: newOrder) => void;
-  nextStep: () => void;
-  timeout: () => void;
-}) => {
+}: PaymentFormPropTypes) => {
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>,
     elements: StripeElements | null,
