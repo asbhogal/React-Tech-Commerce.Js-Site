@@ -11,6 +11,14 @@ const path = require("path"),
     new webpack.ProvidePlugin({
       process: "process/browser",
     }),
+    new webpack.DefinePlugin({
+      "process.env.REACT_APP_CHEC_PUBLIC_KEY": JSON.stringify(
+        process.env.REACT_APP_CHEC_PUBLIC_KEY
+      ),
+      "process.env.REACT_APP_STRIPE_PUBLIC_KEY": JSON.stringify(
+        process.env.REACT_APP_STRIPE_PUBLIC_KEY
+      ),
+    }),
     new Dotenv(),
     // new ProvidePlugin(),
     new CleanWebpackPlugin(),
@@ -33,7 +41,7 @@ module.exports = {
   mode: mode,
 
   entry: {
-    main: "./src/js/index.js",
+    main: "./src/index.tsx",
   },
 
   output: {
@@ -65,6 +73,11 @@ module.exports = {
         },
       },
       {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        loader: "ts-loader",
+      },
+      {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
         type: "asset/resource",
       },
@@ -74,7 +87,10 @@ module.exports = {
   plugins: plugins,
 
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: [".js", ".jsx", ".tsx", ".ts"],
+    alias: {
+      "@": path.resolve(__dirname, "src/"),
+    },
   },
 
   devtool: "source-map",
